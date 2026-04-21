@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Design Service | あなたのお店の"顔"を、プロの手で。</title>
+  <meta name="description" content="業種に合わせたオリジナルデザインのホームページ制作サービス。飲食店・美容サロン・整体院など、個人店オーナー様向けのWeb制作。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #FAFAFA;
+      --text: #333333;
+      --text-light: #666666;
+      --accent: #2563EB;
+      --accent-hover: #1D4ED8;
+      --sub: #F0F4FF;
+      --dark: #1A1A2E;
+      --dark-light: #2A2A4A;
+      --border: #E5E7EB;
+      --radius: 12px;
+      --radius-sm: 8px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Noto Sans JP', 'Inter', sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4, h5, h6,
+    .font-inter {
+      font-family: 'Inter', 'Noto Sans JP', sans-serif;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    a:hover {
+      color: var(--accent-hover);
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ========== Navigation ========== */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(250, 250, 250, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow 0.3s;
+    }
+
+    .nav.scrolled {
+      box-shadow: 0 1px 12px rgba(0, 0, 0, 0.06);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .nav-logo {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-light);
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+    }
+
+    /* ========== Section Common ========== */
+    .section {
+      padding: 100px 0;
+    }
+
+    .section-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      color: var(--text-light);
+      font-size: 0.95rem;
+      margin-bottom: 56px;
+    }
+
+    .section-label {
+      display: block;
+      text-align: center;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 12px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* ========== Fade Up Animation ========== */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .fade-up.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .fade-up-delay-1 { transition-delay: 0.1s; }
+    .fade-up-delay-2 { transition-delay: 0.2s; }
+    .fade-up-delay-3 { transition-delay: 0.3s; }
+
+    /* ========== Hero ========== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+      background: linear-gradient(180deg, var(--sub) 0%, var(--bg) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -120px;
+      right: -120px;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(37, 99, 235, 0.06) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -80px;
+      left: -80px;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(37, 99, 235, 0.04) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-title {
+      font-size: clamp(1.75rem, 5vw, 2.75rem);
+      font-weight: 700;
+      line-height: 1.4;
+      margin-bottom: 20px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-sub {
+      font-size: clamp(0.95rem, 2vw, 1.125rem);
+      color: var(--text-light);
+      margin-bottom: 40px;
+      line-height: 1.8;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 36px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 16px rgba(37, 99, 235, 0.25);
+    }
+
+    .btn:hover {
+      background: var(--accent-hover);
+      color: #fff;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 24px rgba(37, 99, 235, 0.3);
+    }
+
+    .btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--accent);
+      border: 2px solid var(--accent);
+      box-shadow: none;
+    }
+
+    .btn-outline:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-white {
+      background: #fff;
+      color: var(--accent);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-white:hover {
+      background: #F0F4FF;
+      color: var(--accent-hover);
+    }
+
+    /* ========== Portfolio ========== */
+    .portfolio {
+      background: var(--bg);
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 28px;
+    }
+
+    @media (max-width: 768px) {
+      .portfolio-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+    }
+
+    .portfolio-card {
+      background: #fff;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .portfolio-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+    }
+
+    .portfolio-thumb {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .portfolio-thumb-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.85);
+      letter-spacing: 0.02em;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .portfolio-thumb-restaurant {
+      background: linear-gradient(135deg, #568EA3 0%, #3A6B80 50%, #457B91 100%);
+    }
+
+    .portfolio-thumb-nail {
+      background: linear-gradient(135deg, #B76E79 0%, #9E5A64 50%, #C8848D 100%);
+    }
+
+    .portfolio-thumb-hair {
+      background: linear-gradient(135deg, #1A1A1A 0%, #2D2D2D 50%, #1A1A1A 100%);
+    }
+
+    .portfolio-thumb-hair .portfolio-thumb-label {
+      color: #C9A84C;
+    }
+
+    .portfolio-thumb-seitai {
+      background: linear-gradient(135deg, #7BA05B 0%, #5C8040 50%, #8CB56A 100%);
+    }
+
+    .portfolio-body {
+      padding: 24px;
+    }
+
+    .portfolio-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      font-family: 'Inter', 'Noto Sans JP', sans-serif;
+    }
+
+    .portfolio-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 12px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      border-radius: 50px;
+      background: var(--sub);
+      color: var(--accent);
+    }
+
+    .tag-muted {
+      background: #F3F4F6;
+      color: var(--text-light);
+    }
+
+    .portfolio-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+
+    .portfolio-link svg {
+      width: 16px;
+      height: 16px;
+      transition: transform 0.2s;
+    }
+
+    .portfolio-link:hover svg {
+      transform: translateX(3px);
+    }
+
+    /* ========== Service ========== */
+    .service {
+      background: var(--sub);
+    }
+
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 640px) {
+      .service-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .service-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 20px 24px;
+      background: #fff;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+    }
+
+    .service-check {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      margin-top: 2px;
+    }
+
+    .service-check svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .service-text {
+      font-size: 0.95rem;
+      font-weight: 500;
+      line-height: 1.6;
+    }
+
+    /* ========== Pricing ========== */
+    .pricing {
+      background: var(--bg);
+    }
+
+    .pricing-main {
+      max-width: 640px;
+      margin: 0 auto 48px;
+      background: #fff;
+      border: 2px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 40px;
+      text-align: center;
+    }
+
+    .pricing-main-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .pricing-main-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .pricing-main-price {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent);
+      font-family: 'Inter', sans-serif;
+    }
+
+    .pricing-main-note {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      margin-top: 8px;
+    }
+
+    .pricing-table {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .pricing-table table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .pricing-table th,
+    .pricing-table td {
+      padding: 16px 24px;
+      text-align: left;
+      font-size: 0.925rem;
+    }
+
+    .pricing-table thead th {
+      background: var(--dark);
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+
+    .pricing-table tbody tr {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .pricing-table tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    .pricing-table tbody tr:hover {
+      background: var(--sub);
+    }
+
+    .pricing-table td:last-child {
+      text-align: right;
+      font-weight: 600;
+      white-space: nowrap;
+      font-family: 'Inter', 'Noto Sans JP', sans-serif;
+    }
+
+    .pricing-notes {
+      max-width: 640px;
+      margin: 20px auto 0;
+      font-size: 0.8rem;
+      color: var(--text-light);
+      text-align: center;
+      line-height: 1.8;
+    }
+
+    /* ========== Flow ========== */
+    .flow {
+      background: var(--sub);
+    }
+
+    .flow-steps {
+      max-width: 680px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .flow-step {
+      display: flex;
+      gap: 24px;
+      position: relative;
+      padding-bottom: 40px;
+    }
+
+    .flow-step:last-child {
+      padding-bottom: 0;
+    }
+
+    .flow-step-indicator {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .flow-step-number {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .flow-step-line {
+      width: 2px;
+      flex: 1;
+      background: #D1D5DB;
+      margin-top: 8px;
+    }
+
+    .flow-step:last-child .flow-step-line {
+      display: none;
+    }
+
+    .flow-step-content {
+      padding-top: 10px;
+    }
+
+    .flow-step-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .flow-step-desc {
+      font-size: 0.925rem;
+      color: var(--text-light);
+      line-height: 1.7;
+    }
+
+    /* ========== FAQ ========== */
+    .faq {
+      background: var(--bg);
+    }
+
+    .faq-list {
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .faq-item {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .faq-item[open] {
+      border-color: var(--accent);
+    }
+
+    .faq-item summary {
+      padding: 20px 24px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      list-style: none;
+      transition: background 0.2s;
+    }
+
+    .faq-item summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .faq-item summary:hover {
+      background: var(--sub);
+    }
+
+    .faq-item summary::before {
+      content: 'Q';
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 0.8rem;
+      flex-shrink: 0;
+    }
+
+    .faq-item summary::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      border-right: 2px solid var(--text-light);
+      border-bottom: 2px solid var(--text-light);
+      transform: rotate(45deg);
+      margin-left: auto;
+      flex-shrink: 0;
+      transition: transform 0.3s;
+    }
+
+    .faq-item[open] summary::after {
+      transform: rotate(-135deg);
+    }
+
+    .faq-answer {
+      padding: 0 24px 20px 66px;
+      font-size: 0.925rem;
+      color: var(--text-light);
+      line-height: 1.8;
+    }
+
+    /* ========== CTA ========== */
+    .cta {
+      background: var(--dark);
+      color: #fff;
+      text-align: center;
+      padding: 100px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(37, 99, 235, 0.12) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .cta-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-title {
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .cta-sub {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 40px;
+      line-height: 1.8;
+    }
+
+    /* ========== Footer ========== */
+    .footer {
+      background: var(--dark);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 28px 24px;
+      text-align: center;
+    }
+
+    .footer-text {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.4);
+      font-family: 'Inter', 'Noto Sans JP', sans-serif;
+    }
+
+    /* ========== Responsive ========== */
+    @media (max-width: 480px) {
+      .section {
+        padding: 72px 0;
+      }
+
+      .hero {
+        padding: 100px 20px 60px;
+        min-height: auto;
+      }
+
+      .btn {
+        padding: 14px 28px;
+        font-size: 0.95rem;
+      }
+
+      .pricing-main {
+        padding: 28px 20px;
+      }
+
+      .pricing-table th,
+      .pricing-table td {
+        padding: 12px 16px;
+        font-size: 0.85rem;
+      }
+
+      .flow-step {
+        gap: 16px;
+      }
+
+      .flow-step-number {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+      }
+
+      .faq-answer {
+        padding-left: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" id="nav">
+    <div class="container nav-inner">
+      <span class="nav-logo">Web Design Service</span>
+      <ul class="nav-links">
+        <li><a href="#portfolio">制作実績</a></li>
+        <li><a href="#service">サービス内容</a></li>
+        <li><a href="#pricing">料金</a></li>
+        <li><a href="#flow">制作の流れ</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" id="hero">
+    <div class="hero-content">
+      <h1 class="hero-title fade-up">あなたのお店の"顔"を、<br>プロの手で。</h1>
+      <p class="hero-sub fade-up fade-up-delay-1">業種に合わせたオリジナルデザインのホームページ制作</p>
+      <div class="fade-up fade-up-delay-2">
+        <a href="#" class="btn">
+          ココナラで相談する
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio -->
+  <section class="section portfolio" id="portfolio">
+    <div class="container">
+      <span class="section-label fade-up">Portfolio</span>
+      <h2 class="section-title fade-up">制作実績</h2>
+      <p class="section-subtitle fade-up">業種に合わせたデザインをご提案しています</p>
+
+      <div class="portfolio-grid">
+
+        <div class="portfolio-card fade-up">
+          <div class="portfolio-thumb portfolio-thumb-restaurant">
+            <span class="portfolio-thumb-label">Cafe &amp; Bar HANA</span>
+          </div>
+          <div class="portfolio-body">
+            <h3 class="portfolio-title">Cafe &amp; Bar HANA</h3>
+            <div class="portfolio-tags">
+              <span class="tag">飲食店</span>
+              <span class="tag tag-muted">爽やかブルー系</span>
+            </div>
+            <a href="restaurant/" class="portfolio-link">
+              サイトを見る
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="portfolio-card fade-up fade-up-delay-1">
+          <div class="portfolio-thumb portfolio-thumb-nail">
+            <span class="portfolio-thumb-label">Nail Salon Lien</span>
+          </div>
+          <div class="portfolio-body">
+            <h3 class="portfolio-title">Nail Salon Lien</h3>
+            <div class="portfolio-tags">
+              <span class="tag">美容サロン</span>
+              <span class="tag tag-muted">ローズゴールド・上品</span>
+            </div>
+            <a href="nail-salon/" class="portfolio-link">
+              サイトを見る
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="portfolio-card fade-up">
+          <div class="portfolio-thumb portfolio-thumb-hair">
+            <span class="portfolio-thumb-label">ATELIER LUCE</span>
+          </div>
+          <div class="portfolio-body">
+            <h3 class="portfolio-title">ATELIER LUCE</h3>
+            <div class="portfolio-tags">
+              <span class="tag">ヘアサロン</span>
+              <span class="tag tag-muted">ダーク・高級感モード</span>
+            </div>
+            <a href="hair-salon/" class="portfolio-link">
+              サイトを見る
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="portfolio-card fade-up fade-up-delay-1">
+          <div class="portfolio-thumb portfolio-thumb-seitai">
+            <span class="portfolio-thumb-label">からだ整体院</span>
+          </div>
+          <div class="portfolio-body">
+            <h3 class="portfolio-title">からだ整体院</h3>
+            <div class="portfolio-tags">
+              <span class="tag">整体・治療院</span>
+              <span class="tag tag-muted">ナチュラルグリーン</span>
+            </div>
+            <a href="seitai/" class="portfolio-link">
+              サイトを見る
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Service -->
+  <section class="section service" id="service">
+    <div class="container">
+      <span class="section-label fade-up">Service</span>
+      <h2 class="section-title fade-up">基本サービスに含まれるもの</h2>
+      <p class="section-subtitle fade-up">すべてのプランに標準で含まれています</p>
+
+      <div class="service-grid">
+        <div class="service-item fade-up">
+          <span class="service-check">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#2563EB"/><path d="M7 12.5l3 3 7-7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="service-text">オリジナルデザイン（テンプレート不使用）</span>
+        </div>
+        <div class="service-item fade-up fade-up-delay-1">
+          <span class="service-check">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#2563EB"/><path d="M7 12.5l3 3 7-7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="service-text">スマホ・タブレット完全対応</span>
+        </div>
+        <div class="service-item fade-up">
+          <span class="service-check">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#2563EB"/><path d="M7 12.5l3 3 7-7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="service-text">スクロールアニメーション</span>
+        </div>
+        <div class="service-item fade-up fade-up-delay-1">
+          <span class="service-check">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#2563EB"/><path d="M7 12.5l3 3 7-7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="service-text">Googleマップ埋め込み</span>
+        </div>
+        <div class="service-item fade-up">
+          <span class="service-check">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#2563EB"/><path d="M7 12.5l3 3 7-7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="service-text">SNSリンク設置</span>
+        </div>
+        <div class="service-item fade-up fade-up-delay-1">
+          <span class="service-check">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#2563EB"/><path d="M7 12.5l3 3 7-7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="service-text">ファビコン・OGP画像設定</span>
+        </div>
+        <div class="service-item fade-up">
+          <span class="service-check">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#2563EB"/><path d="M7 12.5l3 3 7-7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="service-text">ラフ提案2案</span>
+        </div>
+        <div class="service-item fade-up fade-up-delay-1">
+          <span class="service-check">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#2563EB"/><path d="M7 12.5l3 3 7-7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="service-text">修正3回まで無料</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="section pricing" id="pricing">
+    <div class="container">
+      <span class="section-label fade-up">Pricing</span>
+      <h2 class="section-title fade-up">料金プラン</h2>
+      <p class="section-subtitle fade-up">シンプルで分かりやすい料金体系</p>
+
+      <div class="pricing-main fade-up">
+        <p class="pricing-main-label">基本プラン</p>
+        <h3 class="pricing-main-title">1ページ制作</h3>
+        <p class="pricing-main-price">お見積もり</p>
+        <p class="pricing-main-note">価格はご相談ください</p>
+      </div>
+
+      <div class="pricing-table fade-up">
+        <table>
+          <thead>
+            <tr>
+              <th>オプション</th>
+              <th>料金</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>追加ページ（1ページ）</td>
+              <td>+5,000円</td>
+            </tr>
+            <tr>
+              <td>お問い合わせフォーム設置</td>
+              <td>+3,000円</td>
+            </tr>
+            <tr>
+              <td>ロゴデザイン（簡易）</td>
+              <td>+5,000円</td>
+            </tr>
+            <tr>
+              <td>サーバー・ドメイン取得＋公開代行</td>
+              <td>+8,000円</td>
+            </tr>
+            <tr>
+              <td>納品後の修正（1回）</td>
+              <td>+2,000円</td>
+            </tr>
+            <tr>
+              <td>月額保守（月2回更新）</td>
+              <td>+3,000円/月</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pricing-notes fade-up">
+        <p>※ 表示価格は税込です</p>
+        <p>※ ページ数や内容により変動します</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Flow -->
+  <section class="section flow" id="flow">
+    <div class="container">
+      <span class="section-label fade-up">Flow</span>
+      <h2 class="section-title fade-up">制作の流れ</h2>
+      <p class="section-subtitle fade-up">ご相談から納品まで丁寧にサポートします</p>
+
+      <div class="flow-steps">
+        <div class="flow-step fade-up">
+          <div class="flow-step-indicator">
+            <div class="flow-step-number">1</div>
+            <div class="flow-step-line"></div>
+          </div>
+          <div class="flow-step-content">
+            <h3 class="flow-step-title">ヒアリング</h3>
+            <p class="flow-step-desc">業種・雰囲気・掲載内容をお伺いします。漠然としたイメージでも大丈夫です。</p>
+          </div>
+        </div>
+
+        <div class="flow-step fade-up">
+          <div class="flow-step-indicator">
+            <div class="flow-step-number">2</div>
+            <div class="flow-step-line"></div>
+          </div>
+          <div class="flow-step-content">
+            <h3 class="flow-step-title">ラフ提案</h3>
+            <p class="flow-step-desc">デザインの方向性を2案ご提示します。お好みに近い方をお選びください。</p>
+          </div>
+        </div>
+
+        <div class="flow-step fade-up">
+          <div class="flow-step-indicator">
+            <div class="flow-step-number">3</div>
+            <div class="flow-step-line"></div>
+          </div>
+          <div class="flow-step-content">
+            <h3 class="flow-step-title">制作</h3>
+            <p class="flow-step-desc">承認いただいた案をもとにコーディングを進めます。</p>
+          </div>
+        </div>
+
+        <div class="flow-step fade-up">
+          <div class="flow-step-indicator">
+            <div class="flow-step-number">4</div>
+            <div class="flow-step-line"></div>
+          </div>
+          <div class="flow-step-content">
+            <h3 class="flow-step-title">修正・調整</h3>
+            <p class="flow-step-desc">細かい修正に対応します。3回まで無料です。</p>
+          </div>
+        </div>
+
+        <div class="flow-step fade-up">
+          <div class="flow-step-indicator">
+            <div class="flow-step-number">5</div>
+          </div>
+          <div class="flow-step-content">
+            <h3 class="flow-step-title">納品</h3>
+            <p class="flow-step-desc">HTMLファイル一式をお渡しします。公開代行が必要な場合もご相談ください。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section faq" id="faq">
+    <div class="container">
+      <span class="section-label fade-up">FAQ</span>
+      <h2 class="section-title fade-up">よくある質問</h2>
+      <p class="section-subtitle fade-up">お客様からよくいただくご質問をまとめました</p>
+
+      <div class="faq-list">
+        <details class="faq-item fade-up">
+          <summary>パソコンに詳しくなくても大丈夫ですか？</summary>
+          <div class="faq-answer">
+            はい。大まかなイメージだけで大丈夫です。参考サイトや好きな色味を教えていただければ、こちらからデザインをご提案します。
+          </div>
+        </details>
+
+        <details class="faq-item fade-up">
+          <summary>スマホでもきれいに表示されますか？</summary>
+          <div class="faq-answer">
+            はい。全端末対応のレスポンシブデザインで制作します。
+          </div>
+        </details>
+
+        <details class="faq-item fade-up">
+          <summary>写真や文章は自分で用意する必要がありますか？</summary>
+          <div class="faq-answer">
+            基本的にはお客様にご用意いただきます。必要な素材リストをお渡ししますのでご安心ください。フリー素材での代用もご相談可能です。
+          </div>
+        </details>
+
+        <details class="faq-item fade-up">
+          <summary>納品後に自分で更新できますか？</summary>
+          <div class="faq-answer">
+            HTMLの基本知識があれば可能です。更新が難しい場合は、納品後の修正を別途お受けすることもできます。
+          </div>
+        </details>
+
+        <details class="faq-item fade-up">
+          <summary>予約フォームやお問い合わせフォームは付けられますか？</summary>
+          <div class="faq-answer">
+            Googleフォーム等との連携で設置可能です。本格的な予約システムが必要な場合は、内容に応じてお見積もりします。
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta" id="contact">
+    <div class="cta-content fade-up">
+      <h2 class="cta-title">まずはお気軽にご相談ください</h2>
+      <p class="cta-sub">漠然としたイメージでも大丈夫です。<br>お話を伺いながら一緒に形にしていきます。</p>
+      <a href="#" class="btn btn-white">
+        ココナラで相談する
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p class="footer-text">&copy; 2026 Web Design Service. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    // Scroll animation with IntersectionObserver
+    document.addEventListener('DOMContentLoaded', function () {
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+          }
+        });
+      }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -40px 0px'
+      });
+
+      document.querySelectorAll('.fade-up').forEach(function (el) {
+        observer.observe(el);
+      });
+
+      // Nav scroll shadow
+      var nav = document.getElementById('nav');
+      window.addEventListener('scroll', function () {
+        if (window.scrollY > 10) {
+          nav.classList.add('scrolled');
+        } else {
+          nav.classList.remove('scrolled');
+        }
+      }, { passive: true });
+    });
+  </script>
+
+</body>
+</html>
