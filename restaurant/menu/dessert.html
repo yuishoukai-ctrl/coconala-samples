@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dessert Menu | Cafe & Bar HANA | 名古屋・覚王山</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500&family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --main:    #568EA3;
+      --light:   #C9E4E7;
+      --dark:    #3E6675;
+      --text:    #444444;
+      --light-bg:#F5FAFB;
+      --white:   #ffffff;
+      --gray:    #888888;
+      --border:  #DDDDDD;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+      color: var(--text);
+      background: var(--white);
+      line-height: 1.7;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    /* ─── ヘッダー ─── */
+    #header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow 0.3s;
+    }
+    #header.scrolled { box-shadow: 0 2px 16px rgba(0,0,0,0.08); }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--dark);
+      letter-spacing: 0.1em;
+    }
+    .logo span {
+      font-size: 0.65rem;
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      display: block;
+      color: var(--main);
+      text-transform: uppercase;
+      margin-top: -2px;
+    }
+
+    .global-nav ul {
+      display: flex;
+      list-style: none;
+      gap: 0;
+    }
+    .global-nav a {
+      display: block;
+      padding: 0.5rem 1.1rem;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text);
+      transition: color 0.2s, background 0.2s;
+      position: relative;
+    }
+    .global-nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -1px; left: 50%; right: 50%;
+      height: 2px;
+      background: var(--main);
+      transition: left 0.3s, right 0.3s;
+    }
+    .global-nav a:hover { color: var(--main); }
+    .global-nav a:hover::after { left: 0; right: 0; }
+
+    .nav-reserve {
+      background: var(--main);
+      color: white !important;
+      padding: 0.6rem 1.4rem;
+      border-radius: 2px;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      transition: background 0.2s !important;
+      white-space: nowrap;
+    }
+    .nav-reserve:hover { background: var(--dark) !important; }
+    .nav-reserve::after { display: none !important; }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 26px; height: 2px;
+      background: var(--text);
+      transition: all 0.3s;
+    }
+
+    /* ─── ページヒーロー ─── */
+    .page-hero {
+      margin-top: 70px;
+      height: 280px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        linear-gradient(160deg, rgba(0,0,0,0.45), rgba(0,0,0,0.2)),
+        url('../assets/images/hero-dessert-menu.jpg') center/cover no-repeat;
+    }
+    .page-hero-content {
+      text-align: center;
+      color: white;
+      position: relative;
+      z-index: 1;
+    }
+    .page-hero-eyebrow {
+      font-family: 'Lato', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 300;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 0.8rem;
+    }
+    .page-hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 1.2rem;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.2);
+    }
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.6);
+    }
+    .breadcrumb a { color: rgba(255,255,255,0.6); transition: color 0.2s; }
+    .breadcrumb a:hover { color: white; }
+    .breadcrumb-sep { color: rgba(255,255,255,0.35); }
+    .breadcrumb-current { color: rgba(255,255,255,0.9); }
+
+    /* ─── メニューナビ ─── */
+    .menu-nav {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 70px;
+      z-index: 100;
+    }
+    .menu-nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      gap: 0;
+    }
+    .menu-nav-link {
+      display: block;
+      padding: 1rem 1.8rem;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gray);
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+    .menu-nav-link:hover { color: var(--main); }
+    .menu-nav-link.active {
+      color: var(--main);
+      border-bottom-color: var(--main);
+    }
+
+    /* ─── コンテナ ─── */
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ─── メニューセクション ─── */
+    .menu-section {
+      padding: 4rem 0 0;
+    }
+    .menu-section:last-of-type {
+      padding-bottom: 5rem;
+    }
+
+    .category-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .category-icon {
+      font-size: 1.8rem;
+      line-height: 1;
+    }
+    .category-title-wrap {}
+    .category-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--dark);
+      line-height: 1.2;
+    }
+    .category-subtitle {
+      font-family: 'Lato', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--main);
+      margin-top: 2px;
+    }
+    .category-rule {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ─── ケーキフォトグリッド ─── */
+    .cake-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .cake-card {
+      background: white;
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .cake-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+    }
+    .cake-photo {
+      height: 220px;
+      overflow: hidden;
+    }
+    .cake-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: transform 0.5s ease;
+      display: block;
+    }
+    .cake-card:hover .cake-photo img { transform: scale(1.06); }
+
+    .cake-info { padding: 1.1rem 1.3rem 1.4rem; }
+    .cake-name-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 0.3rem;
+    }
+    .cake-name { font-size: 0.95rem; font-weight: 500; }
+    .cake-desc { font-size: 0.78rem; color: var(--gray); line-height: 1.7; margin-bottom: 0.7rem; }
+    .cake-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 400;
+      color: var(--main);
+    }
+    @media (max-width: 768px) {
+      .cake-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .cake-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ─── メニューアイテム ─── */
+    .menu-list {
+      display: flex;
+      flex-direction: column;
+      border-top: 1px solid var(--border);
+    }
+    .menu-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1rem;
+      align-items: start;
+      padding: 1.1rem 0;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+    .menu-item:hover { background: rgba(200,144,144,0.06); }
+
+    .menu-item-left {}
+    .menu-item-name-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.25rem;
+    }
+    .menu-item-name {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--dark);
+    }
+    .menu-item-desc {
+      font-size: 0.78rem;
+      color: var(--gray);
+      line-height: 1.6;
+    }
+    .menu-item-price {
+      font-family: 'Lato', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--main);
+      white-space: nowrap;
+      text-align: right;
+      padding-top: 2px;
+    }
+    .price-sub {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 400;
+      color: var(--gray);
+      margin-top: 2px;
+    }
+
+    /* ─── バッジ ─── */
+    .badge {
+      display: inline-block;
+      padding: 0.1rem 0.5rem;
+      border-radius: 2px;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .badge-popular { background: #E8A45A; color: white; }
+    .badge-season  { background: #6A9A60; color: white; }
+    .badge-new     { background: var(--main); color: white; }
+    .badge-limited { background: #C86070; color: white; }
+    .badge-takeout { background: #8A6090; color: white; }
+    .badge-set     { background: #3E6675; color: white; }
+
+    /* ─── 人気No.1セクション ─── */
+    .section-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: #E8A45A;
+      color: white;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.8rem;
+      border-radius: 2px;
+      margin-bottom: 1rem;
+    }
+
+    /* ─── ジェラートフォト ─── */
+    .gelato-photo {
+      width: 100%;
+      height: 320px;
+      overflow: hidden;
+      border-radius: 4px;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+    .gelato-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+    .gelato-photo:hover img { transform: scale(1.03); }
+
+    /* ─── ハイライトセクション（ペアリングセット） ─── */
+    .highlight-section {
+      background: linear-gradient(135deg, #F5FAFB 0%, #EEF6F8 100%);
+      border: 1px solid var(--light);
+      border-radius: 4px;
+      padding: 2rem;
+      margin-top: -1rem;
+    }
+    .highlight-section .menu-list {
+      border-top-color: var(--light);
+    }
+    .highlight-section .menu-item {
+      border-bottom-color: rgba(201,228,231,0.5);
+    }
+    .highlight-section .menu-item:hover {
+      background: rgba(201,228,231,0.2);
+    }
+
+    /* ─── 注意事項 ─── */
+    .menu-notes {
+      background: var(--light-bg);
+      border-top: 1px solid var(--border);
+      padding: 3rem 0;
+    }
+    .notes-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    .notes-title {
+      font-family: 'Lato', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--main);
+      margin-bottom: 1rem;
+    }
+    .notes-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .notes-list li {
+      font-size: 0.78rem;
+      color: var(--gray);
+      line-height: 1.8;
+      padding-left: 1em;
+      position: relative;
+    }
+    .notes-list li::before {
+      content: '※';
+      position: absolute;
+      left: 0;
+      color: var(--main);
+      font-size: 0.65rem;
+    }
+
+    /* ─── フッター ─── */
+    footer {
+      background: #1A2A30;
+      color: rgba(255,255,255,0.4);
+      padding: 2.5rem 0;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: rgba(255,255,255,0.6);
+    }
+    .footer-logo span {
+      font-size: 0.6rem;
+      font-family: 'Lato', sans-serif;
+      letter-spacing: 0.2em;
+      display: block;
+      color: rgba(201,228,231,0.5);
+    }
+    .footer-nav {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    .footer-nav a:hover { color: var(--light); }
+    .footer-copy { font-size: 0.7rem; }
+
+    /* ─── アニメーション ─── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: none; }
+    .fade-up.d1 { transition-delay: 0.1s; }
+    .fade-up.d2 { transition-delay: 0.2s; }
+    .fade-up.d3 { transition-delay: 0.3s; }
+
+    /* ─── レスポンシブ ─── */
+    @media (max-width: 900px) {
+      .global-nav { display: none; }
+      .hamburger { display: flex; }
+      .header-inner { height: 60px; }
+      .page-hero { margin-top: 60px; height: 220px; }
+      .menu-nav { top: 60px; }
+      .menu-nav-inner { overflow-x: auto; padding: 0 1rem; }
+      .menu-nav-link { padding: 0.9rem 1.2rem; }
+      .footer-inner { flex-direction: column; gap: 1.5rem; text-align: center; }
+      .footer-nav { flex-wrap: wrap; justify-content: center; }
+    }
+    @media (max-width: 540px) {
+      .container { padding: 0 1rem; }
+      .notes-inner { padding: 0 1rem; }
+      .menu-item { grid-template-columns: 1fr; }
+      .menu-item-price { text-align: left; }
+      .category-header { gap: 0.7rem; }
+      .menu-nav-link { padding: 0.8rem 1rem; font-size: 0.65rem; }
+      .highlight-section { padding: 1.5rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ヘッダー -->
+  <header id="header">
+    <div class="header-inner">
+      <a href="../index.html" class="logo">
+        HANA
+        <span>Cafe &amp; Bar — Kakuozan</span>
+      </a>
+      <nav class="global-nav">
+        <ul>
+          <li><a href="../index.html#concept">Concept</a></li>
+          <li><a href="../index.html#menu">Menu</a></li>
+          <li><a href="../index.html#gallery">Gallery</a></li>
+          <li><a href="../index.html#news">News</a></li>
+          <li><a href="../index.html#access">Access</a></li>
+          <li><a href="../index.html#contact" class="nav-reserve">予約する</a></li>
+        </ul>
+      </nav>
+      <button class="hamburger" aria-label="メニュー">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ページヒーロー -->
+  <div class="page-hero">
+    <div class="page-hero-content">
+      <p class="page-hero-eyebrow">Our Menu</p>
+      <h1 class="page-hero-title">Dessert Menu</h1>
+      <nav class="breadcrumb" aria-label="パンくずリスト">
+        <a href="../index.html">Home</a>
+        <span class="breadcrumb-sep">/</span>
+        <a href="../index.html#menu">Menu</a>
+        <span class="breadcrumb-sep">/</span>
+        <span class="breadcrumb-current">Dessert</span>
+      </nav>
+    </div>
+  </div>
+
+  <!-- メニューナビ -->
+  <nav class="menu-nav" aria-label="メニューページ">
+    <div class="menu-nav-inner">
+      <a href="lunch.html" class="menu-nav-link">Lunch</a>
+      <a href="food.html" class="menu-nav-link">Food</a>
+      <a href="drink.html" class="menu-nav-link">Drink</a>
+      <a href="dessert.html" class="menu-nav-link active" aria-current="page">Dessert</a>
+    </div>
+  </nav>
+
+  <!-- メインコンテンツ -->
+  <main>
+
+    <!-- カテゴリ1: ホールケーキ・スライスケーキ -->
+    <section class="menu-section">
+      <div class="container">
+        <div class="category-header fade-up">
+          <div class="category-icon">🎂</div>
+          <div class="category-title-wrap">
+            <h2 class="category-title">Cake &amp; Gateau</h2>
+            <p class="category-subtitle">ホールケーキ・スライスケーキ</p>
+          </div>
+          <div class="category-rule"></div>
+        </div>
+
+        <div class="cake-grid fade-up d1">
+
+          <div class="cake-card">
+            <div class="cake-photo">
+              <img src="../assets/images/cake-gateau-chocolat.jpg" alt="ガトーショコラ">
+            </div>
+            <div class="cake-info">
+              <div class="cake-name-row">
+                <span class="cake-name">本日のガトーショコラ</span>
+                <span class="badge badge-popular">Popular</span>
+              </div>
+              <p class="cake-desc">パティシエ手作り・毎朝焼き上げ</p>
+              <p class="cake-price">¥680</p>
+            </div>
+          </div>
+
+          <div class="cake-card">
+            <div class="cake-photo">
+              <img src="../assets/images/cake-basque.jpg" alt="バスクチーズケーキ">
+            </div>
+            <div class="cake-info">
+              <div class="cake-name-row">
+                <span class="cake-name">バスクチーズケーキ</span>
+                <span class="badge badge-popular">Popular</span>
+              </div>
+              <p class="cake-desc">濃厚クリームチーズ・外はこんがり中はとろり</p>
+              <p class="cake-price">¥720</p>
+            </div>
+          </div>
+
+          <div class="cake-card">
+            <div class="cake-photo">
+              <img src="../assets/images/cake-tart.jpg" alt="季節のタルト">
+            </div>
+            <div class="cake-info">
+              <div class="cake-name-row">
+                <span class="cake-name">季節のタルト</span>
+                <span class="badge badge-season">季節限定</span>
+              </div>
+              <p class="cake-desc">本日の旬のフルーツを使用</p>
+              <p class="cake-price">¥750</p>
+            </div>
+          </div>
+
+          <div class="cake-card">
+            <div class="cake-photo">
+              <img src="../assets/images/cake-mont-blanc.jpg" alt="モンブラン">
+            </div>
+            <div class="cake-info">
+              <div class="cake-name-row">
+                <span class="cake-name">モンブラン</span>
+                <span class="badge badge-limited">秋季限定</span>
+              </div>
+              <p class="cake-desc">愛知県産栗を使用（秋季限定）</p>
+              <p class="cake-price">¥780</p>
+            </div>
+          </div>
+
+          <div class="cake-card">
+            <div class="cake-photo">
+              <img src="../assets/images/cake-ny-cheesecake.jpg" alt="チーズケーキ（ニューヨーク風）">
+            </div>
+            <div class="cake-info">
+              <div class="cake-name-row">
+                <span class="cake-name">チーズケーキ（ニューヨーク風）</span>
+              </div>
+              <p class="cake-desc">なめらかな口当たり</p>
+              <p class="cake-price">¥680</p>
+            </div>
+          </div>
+
+          <div class="cake-card">
+            <div class="cake-photo">
+              <img src="../assets/images/cake-lemon-chiffon.jpg" alt="レモンシフォンケーキ">
+            </div>
+            <div class="cake-info">
+              <div class="cake-name-row">
+                <span class="cake-name">レモンシフォンケーキ</span>
+              </div>
+              <p class="cake-desc">国産レモンの爽やかな香り</p>
+              <p class="cake-price">¥620</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- カテゴリ2: ジェラート・パフェ -->
+    <section class="menu-section">
+      <div class="container">
+        <div class="category-header fade-up">
+          <div class="category-icon">🍨</div>
+          <div class="category-title-wrap">
+            <h2 class="category-title">Gelato &amp; Parfait</h2>
+            <p class="category-subtitle">ジェラート・パフェ</p>
+          </div>
+          <div class="category-rule"></div>
+        </div>
+
+        <div class="gelato-photo fade-up d1">
+          <img src="../assets/images/gelato-parfait.jpg" alt="ジェラート・パフェ各種">
+        </div>
+
+        <div class="menu-list fade-up d2">
+
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name-row">
+                <span class="menu-item-name">ジェラート（1スクープ）</span>
+              </div>
+              <p class="menu-item-desc">本日のフレーバー：スタッフへ</p>
+            </div>
+            <div class="menu-item-price">¥380</div>
+          </div>
+
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name-row">
+                <span class="menu-item-name">ジェラート（2スクープ）</span>
+              </div>
+              <p class="menu-item-desc">お好みの2フレーバーをお選びください</p>
+            </div>
+            <div class="menu-item-price">¥680</div>
+          </div>
+
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name-row">
+                <span class="menu-item-name">季節のパフェ</span>
+                <span class="badge badge-season">季節限定</span>
+                <span class="badge badge-popular">Popular</span>
+              </div>
+              <p class="menu-item-desc">クリーム・ジェラート・旬のフルーツ・ケーキ</p>
+            </div>
+            <div class="menu-item-price">¥1,280</div>
+          </div>
+
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name-row">
+                <span class="menu-item-name">コーヒーゼリーパフェ</span>
+              </div>
+              <p class="menu-item-desc">自家焙煎コーヒーゼリー・バニラアイス</p>
+            </div>
+            <div class="menu-item-price">¥980</div>
+          </div>
+
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name-row">
+                <span class="menu-item-name">アフォガートパフェ</span>
+              </div>
+              <p class="menu-item-desc">バニラジェラート＋エスプレッソ＋ナッツ</p>
+            </div>
+            <div class="menu-item-price">¥880</div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- カテゴリ3: コーヒーペアリングセット -->
+    <section class="menu-section" style="padding-bottom: 4rem;">
+      <div class="container">
+        <div class="category-header fade-up">
+          <div class="category-icon">☕</div>
+          <div class="category-title-wrap">
+            <h2 class="category-title">Coffee Pairing Sets</h2>
+            <p class="category-subtitle">コーヒーペアリングセット</p>
+          </div>
+          <div class="category-rule"></div>
+        </div>
+
+        <div class="fade-up d1">
+          <div class="section-tag">No.1 人気</div>
+          <div class="highlight-section">
+            <div class="menu-list">
+
+              <div class="menu-item">
+                <div class="menu-item-left">
+                  <div class="menu-item-name-row">
+                    <span class="menu-item-name">ケーキ＋コーヒーセット</span>
+                    <span class="badge badge-set">Set</span>
+                  </div>
+                  <p class="menu-item-desc">本日のケーキ＋ブレンドコーヒー or 紅茶</p>
+                </div>
+                <div class="menu-item-price">¥1,100</div>
+              </div>
+
+              <div class="menu-item">
+                <div class="menu-item-left">
+                  <div class="menu-item-name-row">
+                    <span class="menu-item-name">ケーキ＋シングルオリジンセット</span>
+                    <span class="badge badge-set">Set</span>
+                    <span class="badge badge-popular">おすすめ</span>
+                  </div>
+                  <p class="menu-item-desc">産地を選んでペアリング体験</p>
+                </div>
+                <div class="menu-item-price">¥1,280</div>
+              </div>
+
+              <div class="menu-item">
+                <div class="menu-item-left">
+                  <div class="menu-item-name-row">
+                    <span class="menu-item-name">デザートプレート（2種）</span>
+                    <span class="badge badge-set">Set</span>
+                  </div>
+                  <p class="menu-item-desc">本日の2種のデザート＋ドリンク</p>
+                </div>
+                <div class="menu-item-price">¥1,480</div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- カテゴリ4: テイクアウトスイーツ -->
+    <section class="menu-section" style="background: var(--light-bg); padding-top: 4rem; padding-bottom: 5rem; margin-top: 0;">
+      <div class="container">
+        <div class="category-header fade-up">
+          <div class="category-icon">🎁</div>
+          <div class="category-title-wrap">
+            <h2 class="category-title">Takeout Sweets</h2>
+            <p class="category-subtitle">テイクアウトスイーツ</p>
+          </div>
+          <div class="category-rule"></div>
+        </div>
+
+        <div class="menu-list fade-up d1">
+
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name-row">
+                <span class="menu-item-name">焼き菓子アソート（5個入り）</span>
+                <span class="badge badge-takeout">Take Out</span>
+              </div>
+              <p class="menu-item-desc">クッキー・フィナンシェ・マドレーヌ</p>
+            </div>
+            <div class="menu-item-price">¥980</div>
+          </div>
+
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name-row">
+                <span class="menu-item-name">ガトーショコラ（ホール）</span>
+                <span class="badge badge-takeout">Take Out</span>
+              </div>
+              <p class="menu-item-desc">直径12cm・ギフトBOX付き</p>
+            </div>
+            <div class="menu-item-price">¥2,800</div>
+          </div>
+
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name-row">
+                <span class="menu-item-name">バスクチーズケーキ（ホール）</span>
+                <span class="badge badge-takeout">Take Out</span>
+                <span class="badge badge-limited">要予約</span>
+              </div>
+              <p class="menu-item-desc">直径15cm・要予約</p>
+            </div>
+            <div class="menu-item-price">¥3,500</div>
+          </div>
+
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name-row">
+                <span class="menu-item-name">コーヒー豆とのギフトセット</span>
+                <span class="badge badge-takeout">Take Out</span>
+              </div>
+              <p class="menu-item-desc">焼き菓子＋100g豆</p>
+            </div>
+            <div class="menu-item-price">¥2,200〜</div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 注意事項 -->
+  <div class="menu-notes">
+    <div class="notes-inner">
+      <p class="notes-title">Notes</p>
+      <ul class="notes-list">
+        <li>価格はすべて税込みです。</li>
+        <li>アレルギーをお持ちのお客様はご注文の際にスタッフへお申し付けください（小麦・乳・卵・ナッツ等を使用しています）。</li>
+        <li>本日のケーキは仕入れ・焼き上がり状況により品切れとなる場合がございます。</li>
+        <li>季節限定メニューは時期により提供できない場合がございます。</li>
+        <li>テイクアウトホールケーキはご予約を推奨いたします（バスクチーズケーキは必須）。</li>
+        <li>ギフト用ラッピングは別途承ります。お気軽にスタッフへご相談ください。</li>
+        <li>コーヒーペアリングセットは本日のコーヒーの産地をお選びいただけます。</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- フッター -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">
+        HANA
+        <span>Cafe &amp; Bar — Kakuozan, Nagoya</span>
+      </div>
+      <ul class="footer-nav">
+        <li><a href="../index.html#concept">Concept</a></li>
+        <li><a href="../index.html#menu">Menu</a></li>
+        <li><a href="../index.html#gallery">Gallery</a></li>
+        <li><a href="../index.html#access">Access</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+      </ul>
+      <p class="footer-copy">© 2026 Cafe &amp; Bar HANA. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // ヘッダースクロール
+    window.addEventListener('scroll', () => {
+      document.getElementById('header').classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    // スクロールアニメーション
+    const fadeEls = document.querySelectorAll('.fade-up');
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.08 });
+    fadeEls.forEach(el => io.observe(el));
+
+    // ハンバーガー
+    document.querySelector('.hamburger').addEventListener('click', () => {
+      const nav = document.querySelector('.global-nav');
+      if (!nav) return;
+      const isOpen = nav.style.display === 'block';
+      nav.style.display = isOpen ? '' : 'block';
+      if (!isOpen) {
+        nav.style.position = 'absolute';
+        nav.style.top = '60px';
+        nav.style.left = '0'; nav.style.right = '0';
+        nav.style.background = 'white';
+        nav.style.padding = '1rem 2rem';
+        nav.style.boxShadow = '0 8px 24px rgba(0,0,0,0.1)';
+        nav.querySelector('ul').style.flexDirection = 'column';
+        nav.querySelector('ul').style.gap = '0.5rem';
+      }
+    });
+  </script>
+
+</body>
+</html>

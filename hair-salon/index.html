@@ -1,0 +1,1646 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ATELIER LUCE | 南青山の美容院</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Noto+Serif+JP:wght@300;400;500&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-deep:    #0D0D0D;
+      --bg-mid:     #141414;
+      --bg-surface: #1A1A1A;
+      --bg-card:    #1F1F1F;
+      --divider:    #2A2A2A;
+      --text:       #F5F0E8;
+      --text-muted: #9A9490;
+      --text-dim:   #5A5550;
+      --gold:       #C9A84C;
+      --gold-lt:    #E0C87A;
+      --gold-dk:    #9A7A30;
+      --white:      #FFFFFF;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Jost', 'Noto Serif JP', 'Hiragino Mincho ProN', serif;
+      background: var(--bg-deep);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.8;
+    }
+
+    /* ────────────────────────────────
+       TYPOGRAPHY
+    ──────────────────────────────── */
+    .serif-en {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+    }
+    .serif-jp {
+      font-family: 'Noto Serif JP', 'Hiragino Mincho ProN', serif;
+    }
+    .label {
+      font-family: 'Jost', sans-serif;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-size: 0.7rem;
+      font-weight: 300;
+    }
+
+    /* ────────────────────────────────
+       SCROLL ANIMATION
+    ──────────────────────────────── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .fade-up.delay-1 { transition-delay: 0.1s; }
+    .fade-up.delay-2 { transition-delay: 0.2s; }
+    .fade-up.delay-3 { transition-delay: 0.3s; }
+    .fade-up.delay-4 { transition-delay: 0.4s; }
+
+    /* ────────────────────────────────
+       DECORATIVE LINES
+    ──────────────────────────────── */
+    .deco-line {
+      display: block;
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+      margin: 0 auto 2rem;
+    }
+    .deco-line-left {
+      display: block;
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+    .section-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .section-eyebrow::after {
+      content: '';
+      flex: 1;
+      max-width: 60px;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.6;
+    }
+
+    /* ────────────────────────────────
+       HEADER / NAV
+    ──────────────────────────────── */
+    #main-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.8rem 4rem;
+      transition: background 0.4s ease, padding 0.4s ease, border-bottom 0.4s ease;
+    }
+    #main-nav.scrolled {
+      background: rgba(13, 13, 13, 0.96);
+      padding: 1.2rem 4rem;
+      border-bottom: 1px solid var(--divider);
+      backdrop-filter: blur(8px);
+    }
+
+    .nav-logo {
+      text-decoration: none;
+      color: var(--text);
+    }
+    .nav-logo-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      color: var(--text);
+    }
+    .nav-logo-sub {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.55rem;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      display: block;
+      margin-top: 2px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links-reserve {
+      display: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-family: 'Jost', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 300;
+      transition: color 0.3s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0; right: 0;
+      height: 1px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+
+    .nav-reserve {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 400;
+      color: var(--gold);
+      border: 1px solid var(--gold);
+      padding: 0.5rem 1.2rem;
+      text-decoration: none;
+      transition: background 0.3s, color 0.3s;
+    }
+    .nav-reserve:hover {
+      background: var(--gold);
+      color: var(--bg-deep);
+    }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 26px;
+      height: 1px;
+      background: var(--text);
+      transition: all 0.3s ease;
+    }
+    .hamburger.open span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    /* モバイルメニュー（nav-links自体をオーバーレイに変換） */
+
+    /* ────────────────────────────────
+       HERO
+    ──────────────────────────────── */
+    #hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+    }
+    .hero-bg-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    /* ダークオーバーレイ */
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(13,13,13,0.55) 0%,
+        rgba(13,13,13,0.45) 40%,
+        rgba(13,13,13,0.75) 100%
+      );
+      z-index: 1;
+    }
+
+    /* Decorative vertical lines */
+    .hero-lines {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .hero-lines::before,
+    .hero-lines::after {
+      content: '';
+      position: absolute;
+      top: 15%;
+      bottom: 15%;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, rgba(201,168,76,0.3), transparent);
+    }
+    .hero-lines::before { left: 12%; }
+    .hero-lines::after  { right: 12%; }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 0 2rem;
+    }
+    .hero-eyebrow {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+    .hero-eyebrow::before,
+    .hero-eyebrow::after {
+      content: '';
+      display: block;
+      width: 30px;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.6;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      line-height: 1;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+    }
+    .hero-catch {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(1rem, 2vw, 1.4rem);
+      font-weight: 300;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      margin-bottom: 3rem;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      font-weight: 400;
+      color: var(--bg-deep);
+      background: var(--gold);
+      padding: 1rem 2.5rem;
+      text-decoration: none;
+      transition: background 0.3s, letter-spacing 0.3s;
+    }
+    .btn-primary:hover {
+      background: var(--gold-lt);
+      letter-spacing: 0.35em;
+    }
+
+    .btn-outline {
+      display: inline-block;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      font-weight: 400;
+      color: var(--text);
+      border: 1px solid rgba(245,240,232,0.4);
+      padding: 1rem 2.5rem;
+      text-decoration: none;
+      transition: border-color 0.3s, color 0.3s;
+    }
+    .btn-outline:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-muted);
+    }
+    .hero-scroll span {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+    }
+    .scroll-arrow {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollLine 1.6s ease-in-out infinite;
+    }
+    @keyframes scrollLine {
+      0%   { opacity: 0; transform: scaleY(0); transform-origin: top; }
+      50%  { opacity: 1; transform: scaleY(1); transform-origin: top; }
+      100% { opacity: 0; transform: scaleY(1); transform-origin: bottom; }
+    }
+
+    /* ────────────────────────────────
+       SECTIONS COMMON
+    ──────────────────────────────── */
+    section {
+      padding: 7rem 4rem;
+    }
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .section-header {
+      text-align: center;
+      margin-bottom: 5rem;
+    }
+    .section-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 5rem;
+      font-weight: 300;
+      color: rgba(201,168,76,0.08);
+      line-height: 1;
+      display: block;
+      margin-bottom: -2rem;
+      letter-spacing: 0.1em;
+    }
+    .section-title-en {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      color: var(--text);
+      line-height: 1.1;
+    }
+    .section-title-ja {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 0.78rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      letter-spacing: 0.15em;
+      display: block;
+      margin-top: 0.6rem;
+    }
+    .divider-line {
+      border: none;
+      border-top: 1px solid var(--divider);
+      margin: 0;
+    }
+
+    /* ────────────────────────────────
+       CONCEPT
+    ──────────────────────────────── */
+    #concept {
+      background: var(--bg-mid);
+      border-top: 1px solid var(--divider);
+      border-bottom: 1px solid var(--divider);
+    }
+    .concept-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+    .concept-text .section-eyebrow {
+      justify-content: flex-start;
+    }
+    .concept-label {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .concept-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      line-height: 1.3;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+    }
+    .concept-heading em {
+      font-style: italic;
+      color: var(--gold);
+    }
+    .concept-body {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 2.2;
+      color: var(--text-muted);
+    }
+    .concept-signature {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--gold);
+      margin-top: 2rem;
+      display: block;
+    }
+    .concept-image {
+      aspect-ratio: 3/4;
+      background: var(--bg-surface);
+      border: 1px solid var(--divider);
+      position: relative;
+      overflow: hidden;
+    }
+    .concept-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .concept-image-label {
+      position: absolute;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      writing-mode: vertical-rl;
+    }
+
+    /* ────────────────────────────────
+       MENU
+    ──────────────────────────────── */
+    #menu {
+      background: var(--bg-deep);
+    }
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--divider);
+      border: 1px solid var(--divider);
+    }
+    .menu-card {
+      background: var(--bg-card);
+      padding: 0;
+      transition: background 0.3s;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .menu-card-body {
+      padding: 2.5rem 2rem;
+      flex: 1;
+    }
+    .menu-card-photos {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      height: 240px;
+      overflow: hidden;
+    }
+    .menu-card-photos.photos-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .menu-card-photos img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 15%;
+      display: block;
+    }
+    .menu-card-photo {
+      height: 240px;
+      overflow: hidden;
+    }
+    .menu-card-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 15%;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+    .menu-card:hover .menu-card-photo img,
+    .menu-card:hover .menu-card-photos img { transform: scale(1.05); }
+    .menu-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+    .menu-card:hover::before { transform: scaleX(1); }
+    .menu-card:hover { background: #222222; }
+
+    .menu-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.5rem;
+      font-weight: 300;
+      color: rgba(201,168,76,0.1);
+      line-height: 1;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    .menu-title-en {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+    }
+    .menu-price {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+    .menu-divider {
+      width: 24px;
+      height: 1px;
+      background: var(--divider);
+      margin-bottom: 1.5rem;
+    }
+    .menu-desc {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 0.78rem;
+      font-weight: 300;
+      line-height: 2;
+      color: var(--text-dim);
+    }
+
+    /* ────────────────────────────────
+       STYLIST
+    ──────────────────────────────── */
+    #stylist {
+      background: var(--bg-mid);
+      border-top: 1px solid var(--divider);
+      border-bottom: 1px solid var(--divider);
+    }
+    .stylist-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3rem;
+    }
+    .stylist-card {
+      text-align: center;
+    }
+    .stylist-photo {
+      aspect-ratio: 3/4;
+      background: var(--bg-surface);
+      border: 1px solid var(--divider);
+      margin-bottom: 1.8rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .stylist-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 15%;
+      display: block;
+    }
+    /* プレースホルダー装飾 */
+    .stylist-photo::before {
+      content: '';
+      position: absolute;
+      inset: 16px;
+      border: 1px solid var(--divider);
+      pointer-events: none;
+      z-index: 1;
+    }
+    .stylist-role {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+    .stylist-name-en {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      color: var(--text);
+      margin-bottom: 0.2rem;
+    }
+    .stylist-name-ja {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 0.72rem;
+      font-weight: 300;
+      color: var(--text-dim);
+      margin-bottom: 1.2rem;
+      letter-spacing: 0.1em;
+    }
+    .stylist-comment {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 0.8rem;
+      font-weight: 300;
+      line-height: 2;
+      color: var(--text-muted);
+    }
+
+    /* ────────────────────────────────
+       NEWS
+    ──────────────────────────────── */
+    #news {
+      background: var(--bg-deep);
+    }
+    .news-list {
+      list-style: none;
+    }
+    .news-item {
+      border-bottom: 1px solid var(--divider);
+      padding: 1.8rem 0;
+      display: grid;
+      grid-template-columns: auto auto 1fr;
+      gap: 1.5rem 2rem;
+      align-items: center;
+      transition: color 0.2s;
+    }
+    .news-item:first-child { border-top: 1px solid var(--divider); }
+    .news-item:hover .news-title { color: var(--gold); }
+
+    .news-date {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+      white-space: nowrap;
+      font-weight: 300;
+    }
+    .news-cat {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 400;
+      color: var(--gold);
+      border: 1px solid rgba(201,168,76,0.4);
+      padding: 0.2rem 0.6rem;
+      white-space: nowrap;
+    }
+    .news-title {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 0.88rem;
+      font-weight: 400;
+      color: var(--text);
+      transition: color 0.3s;
+      letter-spacing: 0.04em;
+    }
+    .news-more {
+      text-align: center;
+      margin-top: 3rem;
+    }
+    .btn-text {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      transition: gap 0.3s;
+    }
+    .btn-text::after {
+      content: '';
+      display: block;
+      width: 30px;
+      height: 1px;
+      background: var(--gold);
+      transition: width 0.3s;
+    }
+    .btn-text:hover { gap: 1.2rem; }
+    .btn-text:hover::after { width: 40px; }
+
+    /* ────────────────────────────────
+       ACCESS
+    ──────────────────────────────── */
+    #access {
+      background: var(--bg-mid);
+      border-top: 1px solid var(--divider);
+    }
+    .access-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .map-placeholder {
+      aspect-ratio: 4/3;
+      background: var(--bg-surface);
+      border: 1px solid var(--divider);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .map-placeholder::before {
+      content: '';
+      position: absolute;
+      inset: 16px;
+      border: 1px solid var(--divider);
+    }
+    .map-placeholder-label {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+    .access-info dt {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+      margin-top: 2rem;
+    }
+    .access-info dt:first-child { margin-top: 0; }
+    .access-info dd {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.9;
+      padding-left: 0;
+    }
+    .access-info dd strong {
+      font-weight: 400;
+      color: var(--text);
+    }
+    .access-divider {
+      border: none;
+      border-top: 1px solid var(--divider);
+      margin: 2rem 0;
+    }
+    .access-note {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 0.75rem;
+      font-weight: 300;
+      color: var(--text-dim);
+      line-height: 2;
+    }
+
+    /* ────────────────────────────────
+       RESERVE / CONTACT
+    ──────────────────────────────── */
+    #reserve {
+      background: var(--bg-deep);
+      border-top: 1px solid var(--divider);
+      border-bottom: 1px solid var(--divider);
+      text-align: center;
+    }
+    .reserve-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    .reserve-sub {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      margin-bottom: 3.5rem;
+      line-height: 2;
+    }
+    .reserve-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .reserve-btn {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      text-decoration: none;
+      padding: 1.8rem 3rem;
+      border: 1px solid var(--divider);
+      min-width: 200px;
+      background: var(--bg-card);
+      transition: border-color 0.3s, background 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .reserve-btn::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transition: transform 0.3s;
+    }
+    .reserve-btn:hover { border-color: var(--divider); background: #222; }
+    .reserve-btn:hover::before { transform: scaleX(1); }
+
+    .reserve-btn-icon {
+      /* SVG inline */
+      margin-bottom: 0.3rem;
+    }
+    .reserve-btn-label {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 300;
+    }
+    .reserve-btn-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      color: var(--text);
+    }
+    .reserve-btn-desc {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 0.72rem;
+      font-weight: 300;
+      color: var(--text-dim);
+    }
+
+    /* ────────────────────────────────
+       FOOTER
+    ──────────────────────────────── */
+    footer {
+      background: var(--bg-deep);
+      padding: 4rem 4rem 2.5rem;
+      border-top: 1px solid var(--divider);
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid var(--divider);
+      margin-bottom: 2rem;
+    }
+    .footer-logo-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      color: var(--text);
+      display: block;
+    }
+    .footer-logo-sub {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.55rem;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      display: block;
+      margin-top: 4px;
+    }
+    .footer-address {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 0.75rem;
+      font-weight: 300;
+      color: var(--text-dim);
+      line-height: 2;
+      margin-top: 1.5rem;
+    }
+    .footer-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      text-align: right;
+    }
+    .footer-nav a {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 300;
+      transition: color 0.3s;
+    }
+    .footer-nav a:hover { color: var(--gold); }
+    .footer-sns {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+      justify-content: flex-end;
+    }
+    .footer-sns a {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: color 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .footer-sns a::before {
+      content: '';
+      display: block;
+      width: 16px;
+      height: 1px;
+      background: currentColor;
+    }
+    .footer-sns a:hover { color: var(--gold); }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-copy {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+      font-weight: 300;
+    }
+    .footer-policy a {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .footer-policy a:hover { color: var(--text-muted); }
+
+    /* ────────────────────────────────
+       RESPONSIVE
+    ──────────────────────────────── */
+    @media (max-width: 900px) {
+      #main-nav {
+        padding: 1.5rem 2rem;
+      }
+      #main-nav.scrolled {
+        padding: 1.1rem 2rem;
+      }
+      .nav-links {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        background: rgba(13, 13, 13, 0.98);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2.5rem;
+        list-style: none;
+      }
+      #main-nav.nav-open .nav-links {
+        display: flex;
+      }
+      .nav-links li { text-align: center; }
+      .nav-links a {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 2rem;
+        font-weight: 300;
+        letter-spacing: 0.1em;
+        color: var(--text);
+      }
+      .nav-links a::after { display: none; }
+      .nav-links a:hover { color: var(--gold); }
+      .nav-links-reserve { display: list-item; }
+      .nav-reserve {
+        display: none;
+      }
+      .hamburger {
+        display: flex;
+        z-index: 10000;
+      }
+      section {
+        padding: 5rem 2rem;
+      }
+      .concept-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+      .concept-image {
+        aspect-ratio: 4/3;
+        max-width: 480px;
+        margin: 0 auto;
+      }
+      .menu-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .stylist-grid {
+        grid-template-columns: 1fr;
+        max-width: 420px;
+        margin: 0 auto;
+      }
+      .access-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+      .reserve-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      .footer-top {
+        flex-direction: column;
+        gap: 2.5rem;
+      }
+      .footer-nav { text-align: left; }
+      .footer-sns { justify-content: flex-start; }
+      .footer-bottom {
+        flex-direction: column;
+        gap: 0.8rem;
+        text-align: center;
+      }
+      .news-item {
+        grid-template-columns: auto 1fr;
+        grid-template-rows: auto auto;
+      }
+      .news-title {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .menu-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero-lines::before,
+      .hero-lines::after { display: none; }
+      footer {
+        padding: 3rem 2rem 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ──────────────────────────────
+       NAVIGATION
+  ────────────────────────────── -->
+  <nav id="main-nav">
+    <a href="#hero" class="nav-logo">
+      <span class="nav-logo-text">ATELIER LUCE</span>
+      <span class="nav-logo-sub">Hair Salon — Minami-Aoyama</span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#concept">Concept</a></li>
+      <li><a href="#stylist">Stylist</a></li>
+      <li><a href="#news">News</a></li>
+      <li><a href="#access">Access</a></li>
+      <li class="nav-links-reserve"><a href="#reserve">Reserve</a></li>
+    </ul>
+
+    <a href="#reserve" class="nav-reserve">Reserve</a>
+
+    <button class="hamburger" id="hamburger" aria-label="メニューを開く" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+
+  <!-- ──────────────────────────────
+       HERO
+  ────────────────────────────── -->
+  <section id="hero">
+    <div class="hero-bg" role="img" aria-label="美容院のイメージ">
+      <img src="assets/images/salon-exterior.jpg" alt="" class="hero-bg-img">
+      <img src="assets/images/concept-interior.jpg" alt="" class="hero-bg-img">
+    </div>
+    <div class="hero-lines" aria-hidden="true"></div>
+
+    <div class="hero-content">
+      <p class="hero-eyebrow">Hair Salon — Est. 2018</p>
+      <h1 class="hero-title serif-en">ATELIER LUCE</h1>
+      <p class="hero-catch">Hair is your finest accessory.</p>
+      <a href="#reserve" class="btn-primary">WEB RESERVE</a>
+    </div>
+
+    <div class="hero-scroll" aria-hidden="true">
+      <span>Scroll</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- ──────────────────────────────
+       CONCEPT
+  ────────────────────────────── -->
+  <section id="concept">
+    <div class="section-inner">
+      <div class="concept-grid">
+        <div class="concept-text">
+          <div class="section-eyebrow fade-up">
+            <span class="concept-label">Concept</span>
+          </div>
+          <h2 class="concept-heading fade-up delay-1">
+            髪という素材と向き合い、<br>
+            <em>あなただけのスタイル</em>を。
+          </h2>
+          <p class="concept-body fade-up delay-2">
+            ATELIER LUCEは、「光のアトリエ」という名が示すように、<br>
+            あなたの内なる輝きを引き出すことを使命としています。<br><br>
+            一人ひとりの骨格・毛質・ライフスタイルに向き合い、<br>
+            量産されないオーダーメイドのスタイルを提案。<br>
+            素材の美しさを最大限に活かした仕上がりを追求します。<br><br>
+            南青山の静かな地下空間で、<br>
+            日常から切り離されたひとときをご体験ください。
+          </p>
+          <span class="concept-signature fade-up delay-3">— Atelier Luce, Minami-Aoyama</span>
+        </div>
+
+        <div class="concept-image fade-up delay-2">
+          <img
+            src="assets/images/concept-interior.jpg"
+            alt="ATELIER LUCE 店内"
+          />
+          <span class="concept-image-label" aria-hidden="true">Atelier / Aoyama</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────────────────────
+       MENU / SERVICE
+  ────────────────────────────── -->
+  <section id="menu">
+    <div class="section-inner">
+      <div class="section-header">
+        <span class="section-number" aria-hidden="true">01</span>
+        <h2 class="section-title-en serif-en fade-up">Menu &amp; Price</h2>
+        <span class="section-title-ja fade-up delay-1">メニュー・料金</span>
+        <span class="deco-line fade-up delay-2" aria-hidden="true"></span>
+      </div>
+
+      <div class="menu-grid">
+        <div class="menu-card fade-up">
+          <div class="menu-card-photos">
+            <img src="assets/images/menu-cut-1.jpg" alt="カットスタイル">
+            <img src="assets/images/menu-cut-2.jpg" alt="カット仕上がり">
+            <img src="assets/images/menu-cut-3.jpg" alt="カットビフォーアフター">
+          </div>
+          <div class="menu-card-body">
+            <span class="menu-number" aria-hidden="true">01</span>
+            <h3 class="menu-title-en serif-en">Cut</h3>
+            <p class="menu-price">¥8,800 〜</p>
+            <div class="menu-divider" aria-hidden="true"></div>
+            <p class="menu-desc">
+              骨格・毛流れを丁寧に読み取り、あなたの顔立ちを最も美しく見せるカットを提案。スタイリングが楽になる設計にこだわります。
+            </p>
+          </div>
+        </div>
+
+        <div class="menu-card fade-up delay-1">
+          <div class="menu-card-photos photos-2">
+            <img src="assets/images/menu-color-1.jpg" alt="カラースタイル">
+            <img src="assets/images/menu-color-2.jpg" alt="カラー仕上がり">
+          </div>
+          <div class="menu-card-body">
+            <span class="menu-number" aria-hidden="true">02</span>
+            <h3 class="menu-title-en serif-en">Color</h3>
+            <p class="menu-price">¥13,200 〜</p>
+            <div class="menu-divider" aria-hidden="true"></div>
+            <p class="menu-desc">
+              イルミナカラー・スロウカラーを使用した透明感のある発色。ダメージを最小限に抑え、艶と柔らかさを実現します。
+            </p>
+          </div>
+        </div>
+
+        <div class="menu-card fade-up delay-2">
+          <div class="menu-card-photos" style="grid-template-columns: 1fr;">
+            <img src="assets/images/menu-perm-1.jpg" alt="パーマスタイル">
+          </div>
+          <div class="menu-card-body">
+            <span class="menu-number" aria-hidden="true">03</span>
+            <h3 class="menu-title-en serif-en">Perm</h3>
+            <p class="menu-price">¥16,500 〜</p>
+            <div class="menu-divider" aria-hidden="true"></div>
+            <p class="menu-desc">
+              デジタルパーマ・コールドパーマを髪質に合わせて使い分け。ナチュラルなウェーブから毛先のカールまで幅広く対応します。
+            </p>
+          </div>
+        </div>
+
+        <div class="menu-card fade-up delay-3">
+          <div class="menu-card-photos photos-2">
+            <img src="assets/images/menu-treatment-1.jpg" alt="トリートメント施術">
+            <img src="assets/images/menu-treatment-2.jpg" alt="トリートメント仕上がり">
+          </div>
+          <div class="menu-card-body">
+            <span class="menu-number" aria-hidden="true">04</span>
+            <h3 class="menu-title-en serif-en">Treatment</h3>
+            <p class="menu-price">¥5,500 〜</p>
+            <div class="menu-divider" aria-hidden="true"></div>
+            <p class="menu-desc">
+              CMCトリートメントで髪の内側から補修。毛先のダメージや乾燥が気になる方に。施術の最後に艶を与える仕上げ処理も含みます。
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <p style="text-align:center; margin-top:2rem;">
+        <a href="#reserve" class="btn-text fade-up">Full Menu</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ──────────────────────────────
+       STYLIST
+  ────────────────────────────── -->
+  <section id="stylist">
+    <div class="section-inner">
+      <div class="section-header">
+        <span class="section-number" aria-hidden="true">02</span>
+        <h2 class="section-title-en serif-en fade-up">Our Stylists</h2>
+        <span class="section-title-ja fade-up delay-1">スタイリスト紹介</span>
+        <span class="deco-line fade-up delay-2" aria-hidden="true"></span>
+      </div>
+
+      <div class="stylist-grid">
+        <!-- Stylist 1 -->
+        <div class="stylist-card fade-up">
+          <div class="stylist-photo">
+            <img
+              src="assets/images/stylist-1.jpg"
+              alt="スタイリスト 広瀬 陽"
+            />
+          </div>
+          <p class="stylist-role">Director</p>
+          <h3 class="stylist-name-en serif-en">Yo Hirose</h3>
+          <p class="stylist-name-ja">広瀬 陽</p>
+          <p class="stylist-comment">
+            素材の美しさを引き出すことに<br>
+            すべての技術を注ぎ込む。<br>
+            あなたの"一番"に向き合います。
+          </p>
+        </div>
+
+        <!-- Stylist 2 -->
+        <div class="stylist-card fade-up delay-1">
+          <div class="stylist-photo">
+            <img
+              src="assets/images/stylist-2.jpg"
+              alt="スタイリスト 三好 澄"
+            />
+          </div>
+          <p class="stylist-role">Top Stylist</p>
+          <h3 class="stylist-name-en serif-en">Sumi Miyoshi</h3>
+          <p class="stylist-name-ja">三好 澄</p>
+          <p class="stylist-comment">
+            カラーリングを通じて<br>
+            毎日が少し楽しくなるような<br>
+            スタイルをお届けします。
+          </p>
+        </div>
+
+        <!-- Stylist 3 -->
+        <div class="stylist-card fade-up delay-2">
+          <div class="stylist-photo">
+            <img
+              src="assets/images/stylist-3.jpg"
+              alt="スタイリスト 今村 玲"
+            />
+          </div>
+          <p class="stylist-role">Stylist</p>
+          <h3 class="stylist-name-en serif-en">Rei Imamura</h3>
+          <p class="stylist-name-ja">今村 玲</p>
+          <p class="stylist-comment">
+            ご要望を丁寧に聞き、<br>
+            理想と現実のギャップを埋める<br>
+            提案を大切にしています。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────────────────────
+       NEWS
+  ────────────────────────────── -->
+  <section id="news">
+    <div class="section-inner">
+      <div class="section-header">
+        <span class="section-number" aria-hidden="true">03</span>
+        <h2 class="section-title-en serif-en fade-up">News</h2>
+        <span class="section-title-ja fade-up delay-1">お知らせ</span>
+        <span class="deco-line fade-up delay-2" aria-hidden="true"></span>
+      </div>
+
+      <ul class="news-list">
+        <li class="news-item fade-up">
+          <time class="news-date" datetime="2026-04-15">2026.04.15</time>
+          <span class="news-cat">Info</span>
+          <p class="news-title">ゴールデンウィーク期間中の営業について</p>
+        </li>
+        <li class="news-item fade-up delay-1">
+          <time class="news-date" datetime="2026-03-28">2026.03.28</time>
+          <span class="news-cat">New</span>
+          <p class="news-title">春の新メニュー「Botanical Color」を開始しました</p>
+        </li>
+        <li class="news-item fade-up delay-2">
+          <time class="news-date" datetime="2026-03-01">2026.03.01</time>
+          <span class="news-cat">Staff</span>
+          <p class="news-title">スタイリスト 今村 玲が新たに加わりました</p>
+        </li>
+      </ul>
+
+      <div class="news-more fade-up">
+        <a href="#" class="btn-text">All News</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────────────────────
+       ACCESS
+  ────────────────────────────── -->
+  <section id="access">
+    <div class="section-inner">
+      <div class="section-header">
+        <span class="section-number" aria-hidden="true">04</span>
+        <h2 class="section-title-en serif-en fade-up">Access</h2>
+        <span class="section-title-ja fade-up delay-1">アクセス・店舗情報</span>
+        <span class="deco-line fade-up delay-2" aria-hidden="true"></span>
+      </div>
+
+      <div class="access-grid">
+        <div class="map-placeholder fade-up" style="border:none; background:none; padding:0;">
+          <img src="assets/images/salon-exterior.jpg" alt="ATELIER LUCE 外観" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:2px;">
+        </div>
+
+        <div class="fade-up delay-1">
+          <dl class="access-info">
+            <dt>Address</dt>
+            <dd>
+              <strong>東京都港区南青山3-XX-XX B1F</strong><br>
+              東京メトロ銀座線・半蔵門線・千代田線<br>
+              「表参道」駅 A4出口 徒歩4分
+            </dd>
+
+            <dt>Hours</dt>
+            <dd>
+              火〜土 &nbsp; 10:00 〜 20:00<br>
+              日・祝 &nbsp; 10:00 〜 18:00<br>
+              <span style="color:var(--text-dim);">月曜日 定休</span>
+            </dd>
+
+            <dt>Tel</dt>
+            <dd>
+              <strong>03-XXXX-XXXX</strong>
+            </dd>
+
+            <dt>Instagram</dt>
+            <dd>
+              <a
+                href="https://instagram.com/atelier_luce_aoyama"
+                target="_blank"
+                rel="noopener noreferrer"
+                style="color:var(--gold); text-decoration:none; font-weight:400;"
+              >@atelier_luce_aoyama</a>
+            </dd>
+          </dl>
+
+          <hr class="access-divider" />
+
+          <p class="access-note">
+            当日予約はお電話にて承ります。<br>
+            WEB予約は前日までにお願いいたします。<br>
+            駐車場はございませんので、<br>
+            お近くのコインパーキングをご利用ください。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────────────────────
+       RESERVE / CONTACT
+  ────────────────────────────── -->
+  <section id="reserve">
+    <div class="section-inner">
+      <span class="deco-line fade-up" aria-hidden="true" style="margin-bottom:1.5rem;"></span>
+      <h2 class="reserve-heading serif-en fade-up">Make a Reservation</h2>
+      <p class="reserve-sub fade-up delay-1">
+        ご予約・お問い合わせは以下よりお選びください。
+      </p>
+
+      <div class="reserve-buttons">
+        <a href="#" class="reserve-btn fade-up">
+          <!-- Web icon SVG -->
+          <svg class="reserve-btn-icon" width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+            <circle cx="14" cy="14" r="12.5" stroke="#C9A84C" stroke-width="1"/>
+            <ellipse cx="14" cy="14" rx="5.5" ry="12.5" stroke="#C9A84C" stroke-width="1"/>
+            <line x1="1.5" y1="14" x2="26.5" y2="14" stroke="#C9A84C" stroke-width="1"/>
+            <line x1="1.5" y1="9" x2="26.5" y2="9" stroke="#C9A84C" stroke-width="1" stroke-dasharray="2 2"/>
+            <line x1="1.5" y1="19" x2="26.5" y2="19" stroke="#C9A84C" stroke-width="1" stroke-dasharray="2 2"/>
+          </svg>
+          <span class="reserve-btn-label">Web</span>
+          <span class="reserve-btn-title serif-en">Web Reserve</span>
+          <span class="reserve-btn-desc">24時間受付・前日まで</span>
+        </a>
+
+        <a href="https://line.me" target="_blank" rel="noopener noreferrer" class="reserve-btn fade-up delay-1">
+          <!-- Line icon SVG -->
+          <svg class="reserve-btn-icon" width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+            <rect x="2" y="2" width="24" height="24" rx="6" stroke="#C9A84C" stroke-width="1"/>
+            <path d="M22 13.2C22 9.9 18.4 7.2 14 7.2C9.6 7.2 6 9.9 6 13.2C6 16.1 8.5 18.6 11.9 19.4L11.3 21.2L14.2 19.5C14.1 19.5 14.1 19.5 14 19.5C18.4 19.5 22 16.8 22 13.2Z" stroke="#C9A84C" stroke-width="1" stroke-linejoin="round"/>
+          </svg>
+          <span class="reserve-btn-label">LINE</span>
+          <span class="reserve-btn-title serif-en">LINE Chat</span>
+          <span class="reserve-btn-desc">メッセージで気軽にご相談</span>
+        </a>
+
+        <a href="tel:03-XXXX-XXXX" class="reserve-btn fade-up delay-2">
+          <!-- Phone icon SVG -->
+          <svg class="reserve-btn-icon" width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+            <path d="M8 5C8 5 6 7 6 11C6 19 17 24 22 22L24 18L20 16L18 18C18 18 14 16 12 12L14 10L12 6L8 5Z" stroke="#C9A84C" stroke-width="1" stroke-linejoin="round"/>
+          </svg>
+          <span class="reserve-btn-label">Phone</span>
+          <span class="reserve-btn-title serif-en">03-XXXX-XXXX</span>
+          <span class="reserve-btn-desc">営業時間内にお電話ください</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────────────────────
+       FOOTER
+  ────────────────────────────── -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div>
+          <a href="#hero" style="text-decoration:none;">
+            <span class="footer-logo-text">ATELIER LUCE</span>
+            <span class="footer-logo-sub">Hair Salon — Minami-Aoyama, Tokyo</span>
+          </a>
+          <p class="footer-address">
+            東京都港区南青山3-XX-XX B1F<br>
+            03-XXXX-XXXX
+          </p>
+        </div>
+
+        <div>
+          <nav class="footer-nav" aria-label="フッターナビゲーション">
+            <a href="#menu">Menu</a>
+            <a href="#concept">Concept</a>
+            <a href="#stylist">Stylist</a>
+            <a href="#news">News</a>
+            <a href="#access">Access</a>
+            <a href="#reserve">Reserve</a>
+          </nav>
+          <div class="footer-sns">
+            <a href="https://instagram.com/atelier_luce_aoyama" target="_blank" rel="noopener noreferrer">Instagram</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-copy">
+          &copy; 2026 ATELIER LUCE. All Rights Reserved.
+        </p>
+        <nav class="footer-policy" aria-label="ポリシーリンク">
+          <a href="#">Privacy Policy</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ──────────────────────────────
+       JAVASCRIPT
+  ────────────────────────────── -->
+  <script>
+    // ── Scroll: nav background
+    const nav = document.getElementById('main-nav');
+    function updateNav() {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    }
+    window.addEventListener('scroll', updateNav, { passive: true });
+    updateNav();
+
+    // ── Hamburger menu
+    const hamburger = document.getElementById('hamburger');
+    const mainNav = document.getElementById('main-nav');
+
+    function toggleMenu(open) {
+      hamburger.classList.toggle('open', open);
+      hamburger.setAttribute('aria-expanded', open);
+      mainNav.classList.toggle('nav-open', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    }
+
+    hamburger.addEventListener('click', () => {
+      const isOpen = mainNav.classList.contains('nav-open');
+      toggleMenu(!isOpen);
+    });
+
+    // Close on link click
+    mainNav.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => toggleMenu(false));
+    });
+
+    // Close on Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mainNav.classList.contains('nav-open')) {
+        toggleMenu(false);
+        hamburger.focus();
+      }
+    });
+
+    // ── IntersectionObserver: fade-up
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {
+      threshold: 0.12,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    // ── Smooth scroll for all anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (!target) return;
+        e.preventDefault();
+        const offset = 80;
+        const top = target.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top, behavior: 'smooth' });
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ランチメニュー | Cafe & Bar HANA | 名古屋・覚王山</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500&family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --main:    #568EA3;
+      --light:   #C9E4E7;
+      --dark:    #3E6675;
+      --text:    #444444;
+      --light-bg:#F5FAFB;
+      --white:   #ffffff;
+      --gray:    #888888;
+      --border:  #DDDDDD;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+      color: var(--text);
+      background: var(--white);
+      line-height: 1.7;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    /* ─── ヘッダー ─── */
+    #header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow 0.3s;
+    }
+    #header.scrolled { box-shadow: 0 2px 16px rgba(0,0,0,0.08); }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--dark);
+      letter-spacing: 0.1em;
+    }
+    .logo span {
+      font-size: 0.65rem;
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      display: block;
+      color: var(--main);
+      text-transform: uppercase;
+      margin-top: -2px;
+    }
+
+    .global-nav ul {
+      display: flex;
+      list-style: none;
+      gap: 0;
+    }
+    .global-nav a {
+      display: block;
+      padding: 0.5rem 1.1rem;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text);
+      transition: color 0.2s, background 0.2s;
+      position: relative;
+    }
+    .global-nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -1px; left: 50%; right: 50%;
+      height: 2px;
+      background: var(--main);
+      transition: left 0.3s, right 0.3s;
+    }
+    .global-nav a:hover { color: var(--main); }
+    .global-nav a:hover::after { left: 0; right: 0; }
+
+    .nav-reserve {
+      background: var(--main);
+      color: white !important;
+      padding: 0.6rem 1.4rem;
+      border-radius: 2px;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      transition: background 0.2s !important;
+      white-space: nowrap;
+    }
+    .nav-reserve:hover { background: var(--dark) !important; }
+    .nav-reserve::after { display: none !important; }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 26px; height: 2px;
+      background: var(--text);
+      transition: all 0.3s;
+    }
+
+    /* ─── ページヒーロー ─── */
+    .page-hero {
+      margin-top: 70px;
+      height: 280px;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      background: linear-gradient(160deg, rgba(0,0,0,0.45), rgba(0,0,0,0.2)),
+                  url('../assets/images/hero-lunch-menu.jpg') center/cover no-repeat;
+    }
+
+    .page-hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem 2.5rem;
+      width: 100%;
+    }
+
+    .breadcrumb {
+      font-family: 'Lato', sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .breadcrumb a { color: rgba(255,255,255,0.65); transition: color 0.2s; }
+    .breadcrumb a:hover { color: white; }
+    .breadcrumb-sep { opacity: 0.5; }
+    .breadcrumb-current { color: rgba(255,255,255,0.9); }
+
+    .page-hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 400;
+      color: white;
+      letter-spacing: 0.05em;
+      line-height: 1.2;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+    }
+    .page-hero-title span {
+      display: block;
+      font-family: 'Zen Kaku Gothic New', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      color: rgba(255,255,255,0.8);
+      margin-top: 0.4rem;
+    }
+
+    /* ─── メニューナビ ─── */
+    .menu-nav {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 70px;
+      z-index: 900;
+    }
+    .menu-nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      gap: 0;
+    }
+    .menu-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem 1.5rem;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gray);
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+    .menu-nav-item:hover { color: var(--main); }
+    .menu-nav-item.active {
+      color: var(--dark);
+      border-bottom-color: var(--main);
+    }
+    .menu-nav-icon { font-size: 1rem; }
+
+    /* ─── メインコンテンツ ─── */
+    .menu-content {
+      background: var(--light-bg);
+      padding: 4rem 0 5rem;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* カテゴリセクション */
+    .menu-category {
+      margin-bottom: 3.5rem;
+    }
+    .menu-category:last-child { margin-bottom: 0; }
+
+    .category-header {
+      display: flex;
+      align-items: flex-end;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--light);
+      position: relative;
+    }
+    .category-header::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0;
+      width: 60px; height: 2px;
+      background: var(--main);
+    }
+
+    .category-icon {
+      font-size: 1.8rem;
+      line-height: 1;
+    }
+    .category-title-wrap {}
+    .category-en {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 400;
+      color: var(--dark);
+      line-height: 1;
+    }
+    .category-ja {
+      font-size: 0.75rem;
+      font-weight: 300;
+      color: var(--main);
+      letter-spacing: 0.15em;
+      margin-top: 0.3rem;
+    }
+    .category-note {
+      margin-left: auto;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--gray);
+      background: var(--light-bg);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 0.3rem 0.8rem;
+      white-space: nowrap;
+    }
+
+    /* メニューアイテム */
+    .menu-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      background: white;
+      border-radius: 4px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+      overflow: hidden;
+    }
+
+    .menu-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1rem;
+      align-items: start;
+      padding: 1.4rem 1.8rem;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.2s;
+    }
+    .menu-item:last-child { border-bottom: none; }
+    .menu-item:hover { background: var(--light-bg); }
+
+    .menu-item-left {}
+    .menu-item-name-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.35rem;
+    }
+    .menu-item-name {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--dark);
+      line-height: 1.4;
+    }
+    .menu-item-desc {
+      font-size: 0.82rem;
+      color: var(--gray);
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    .menu-item-right {
+      text-align: right;
+      flex-shrink: 0;
+      padding-top: 0.1rem;
+    }
+    .menu-price {
+      font-family: 'Lato', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--dark);
+      letter-spacing: 0.02em;
+    }
+    .menu-price-add {
+      font-family: 'Lato', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--main);
+      letter-spacing: 0.02em;
+    }
+
+    /* バッジ */
+    .badge {
+      display: inline-block;
+      padding: 0.1rem 0.55rem;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      border-radius: 2px;
+      white-space: nowrap;
+      line-height: 1.6;
+      vertical-align: middle;
+    }
+    .badge-popular {
+      background: #E8734A;
+      color: white;
+    }
+    .badge-season {
+      background: #6A9A60;
+      color: white;
+    }
+    .badge-veggie {
+      background: #5A9070;
+      color: white;
+    }
+    .badge-new {
+      background: var(--main);
+      color: white;
+    }
+
+    /* ─── 注意事項フッターメモ ─── */
+    .menu-notes {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.8rem 2rem;
+      margin-top: 3rem;
+    }
+    .menu-notes-title {
+      font-family: 'Lato', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--main);
+      margin-bottom: 1rem;
+    }
+    .menu-notes ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .menu-notes li {
+      font-size: 0.8rem;
+      color: var(--gray);
+      line-height: 1.7;
+      padding-left: 1.2em;
+      position: relative;
+    }
+    .menu-notes li::before {
+      content: '※';
+      position: absolute;
+      left: 0;
+      color: var(--main);
+      font-size: 0.75rem;
+    }
+
+    /* ─── フッター ─── */
+    footer {
+      background: #1A2A30;
+      color: rgba(255,255,255,0.4);
+      padding: 2.5rem 0;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: rgba(255,255,255,0.6);
+    }
+    .footer-logo span {
+      font-size: 0.6rem;
+      font-family: 'Lato', sans-serif;
+      letter-spacing: 0.2em;
+      display: block;
+      color: rgba(201,228,231,0.5);
+    }
+    .footer-nav {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    .footer-nav a:hover { color: var(--light); }
+    .footer-copy { font-size: 0.7rem; }
+
+    /* ─── スクロールアニメーション ─── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: none; }
+    .fade-up.d1 { transition-delay: 0.1s; }
+    .fade-up.d2 { transition-delay: 0.2s; }
+    .fade-up.d3 { transition-delay: 0.3s; }
+
+    /* ─── スマホ対応 ─── */
+    @media (max-width: 900px) {
+      .global-nav { display: none; }
+      .hamburger { display: flex; }
+      .header-inner { height: 60px; }
+      .page-hero { margin-top: 60px; }
+      .menu-nav { top: 60px; }
+
+      .menu-nav-inner { overflow-x: auto; }
+      .menu-nav-item { padding: 0.9rem 1rem; font-size: 0.68rem; }
+      .menu-nav-icon { font-size: 0.9rem; }
+
+      .footer-inner { flex-direction: column; gap: 1.5rem; text-align: center; }
+      .footer-nav { flex-wrap: wrap; justify-content: center; }
+    }
+
+    @media (max-width: 600px) {
+      .page-hero { height: 220px; }
+      .menu-item { padding: 1.2rem 1.2rem; }
+      .category-note { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ヘッダー -->
+  <header id="header">
+    <div class="header-inner">
+      <a href="../index.html" class="logo">HANA<span>Cafe &amp; Bar — Kakuozan</span></a>
+      <nav class="global-nav">
+        <ul>
+          <li><a href="../index.html#concept">Concept</a></li>
+          <li><a href="../index.html#menu">Menu</a></li>
+          <li><a href="../index.html#gallery">Gallery</a></li>
+          <li><a href="../index.html#news">News</a></li>
+          <li><a href="../index.html#access">Access</a></li>
+          <li><a href="../index.html#contact" class="nav-reserve">予約する</a></li>
+        </ul>
+      </nav>
+      <button class="hamburger" aria-label="メニュー">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ページヒーロー -->
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <nav class="breadcrumb" aria-label="パンくずリスト">
+        <a href="../index.html">Home</a>
+        <span class="breadcrumb-sep">/</span>
+        <a href="../index.html#menu">Menu</a>
+        <span class="breadcrumb-sep">/</span>
+        <span class="breadcrumb-current">Lunch</span>
+      </nav>
+      <h1 class="page-hero-title">
+        Lunch
+        <span>ランチメニュー</span>
+      </h1>
+    </div>
+  </div>
+
+  <!-- メニューナビ -->
+  <nav class="menu-nav" aria-label="メニューナビゲーション">
+    <div class="menu-nav-inner">
+      <a href="lunch.html" class="menu-nav-item active">
+        <span class="menu-nav-icon">🍽️</span>Lunch
+      </a>
+      <a href="food.html" class="menu-nav-item">
+        <span class="menu-nav-icon">🍝</span>Food
+      </a>
+      <a href="drink.html" class="menu-nav-item">
+        <span class="menu-nav-icon">🍷</span>Drink
+      </a>
+      <a href="dessert.html" class="menu-nav-item">
+        <span class="menu-nav-icon">🍰</span>Dessert
+      </a>
+    </div>
+  </nav>
+
+  <!-- メニューコンテンツ -->
+  <main class="menu-content">
+    <div class="container">
+
+      <!-- カテゴリ1: ランチプレート -->
+      <section class="menu-category fade-up">
+        <div class="category-header">
+          <span class="category-icon">🍱</span>
+          <div class="category-title-wrap">
+            <p class="category-en">Lunch Plate</p>
+            <p class="category-ja">ランチプレート</p>
+          </div>
+          <span class="category-note">11:00 〜 14:30 L.O.</span>
+        </div>
+        <div class="menu-list">
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name-row">
+                <span class="menu-item-name">本日のランチプレートA</span>
+                <span class="badge badge-season">日替わり</span>
+              </div>
+              <p class="menu-item-desc">本日のメイン（魚料理）・副菜3種・スープ・ライスまたはパン</p>
+            </div>
+            <div class="menu-item-right">
+              <p class="menu-price">¥1,280</p>
+            </div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name-row">
+                <span class="menu-item-name">本日のランチプレートB</span>
+                <span class="badge badge-popular">人気</span>
+                <span class="badge badge-season">日替わり</span>
+              </div>
+              <p class="menu-item-desc">本日のメイン（肉料理）・副菜3種・スープ・ライスまたはパン</p>
+            </div>
+            <div class="menu-item-right">
+              <p class="menu-price">¥1,380</p>
+            </div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name-row">
+                <span class="menu-item-name">ベジタブルプレート</span>
+                <span class="badge badge-veggie">ベジタブル</span>
+              </div>
+              <p class="menu-item-desc">愛知県産旬野菜のグリル・豆のスープ・雑穀ごはん</p>
+            </div>
+            <div class="menu-item-right">
+              <p class="menu-price">¥1,180</p>
+            </div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name-row">
+                <span class="menu-item-name">キッシュセット</span>
+                <span class="badge badge-season">日替わり</span>
+              </div>
+              <p class="menu-item-desc">本日のキッシュ・サラダ・スープ</p>
+            </div>
+            <div class="menu-item-right">
+              <p class="menu-price">¥1,080</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- カテゴリ2: セットオプション -->
+      <section class="menu-category fade-up d1">
+        <div class="category-header">
+          <span class="category-icon">➕</span>
+          <div class="category-title-wrap">
+            <p class="category-en">Set Options</p>
+            <p class="category-ja">セットオプション</p>
+          </div>
+          <span class="category-note">ランチプレートに追加</span>
+        </div>
+        <div class="menu-list">
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name-row">
+                <span class="menu-item-name">ドリンクセット</span>
+              </div>
+              <p class="menu-item-desc">コーヒー・紅茶・ソフトドリンクから1杯</p>
+            </div>
+            <div class="menu-item-right">
+              <p class="menu-price-add">＋¥330</p>
+            </div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name-row">
+                <span class="menu-item-name">デザートセット</span>
+              </div>
+              <p class="menu-item-desc">本日のミニデザート</p>
+            </div>
+            <div class="menu-item-right">
+              <p class="menu-price-add">＋¥380</p>
+            </div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name-row">
+                <span class="menu-item-name">ドリンク＋デザートセット</span>
+                <span class="badge badge-popular">おすすめ</span>
+              </div>
+              <p class="menu-item-desc">上記2点セット</p>
+            </div>
+            <div class="menu-item-right">
+              <p class="menu-price-add">＋¥580</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- カテゴリ3: 単品サイド -->
+      <section class="menu-category fade-up d2">
+        <div class="category-header">
+          <span class="category-icon">🥗</span>
+          <div class="category-title-wrap">
+            <p class="category-en">A la Carte</p>
+            <p class="category-ja">単品サイド</p>
+          </div>
+        </div>
+        <div class="menu-list">
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name-row">
+                <span class="menu-item-name">本日のスープ</span>
+                <span class="badge badge-season">日替わり</span>
+              </div>
+            </div>
+            <div class="menu-item-right">
+              <p class="menu-price">¥380</p>
+            </div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name-row">
+                <span class="menu-item-name">サラダ（S）</span>
+              </div>
+              <p class="menu-item-desc">本日のドレッシング添え</p>
+            </div>
+            <div class="menu-item-right">
+              <p class="menu-price">¥480</p>
+            </div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name-row">
+                <span class="menu-item-name">パン（2個）</span>
+                <span class="badge badge-popular">人気</span>
+              </div>
+              <p class="menu-item-desc">自家製フォカッチャ</p>
+            </div>
+            <div class="menu-item-right">
+              <p class="menu-price">¥280</p>
+            </div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-left">
+              <div class="menu-item-name-row">
+                <span class="menu-item-name">ライス</span>
+              </div>
+            </div>
+            <div class="menu-item-right">
+              <p class="menu-price">¥180</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 注意事項 -->
+      <div class="menu-notes fade-up">
+        <p class="menu-notes-title">Notes</p>
+        <ul>
+          <li>表示価格はすべて税込みです。</li>
+          <li>ランチメニューの提供時間は 11:00〜14:30（L.O.）です。</li>
+          <li>「本日の」と記載のメニューは日替わりです。内容はスタッフにお尋ねください。</li>
+          <li>食物アレルギーのあるお客様はご注文前にスタッフへお申し付けください。</li>
+          <li>仕入れ状況により、一部メニューをご提供できない場合がございます。</li>
+        </ul>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- フッター -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">
+        HANA
+        <span>Cafe &amp; Bar — Kakuozan, Nagoya</span>
+      </div>
+      <ul class="footer-nav">
+        <li><a href="../index.html#concept">Concept</a></li>
+        <li><a href="../index.html#menu">Menu</a></li>
+        <li><a href="../index.html#gallery">Gallery</a></li>
+        <li><a href="../index.html#access">Access</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+      </ul>
+      <p class="footer-copy">&copy; 2026 Cafe &amp; Bar HANA. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // ヘッダースクロール
+    window.addEventListener('scroll', () => {
+      document.getElementById('header').classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    // スクロールアニメーション
+    const fadeEls = document.querySelectorAll('.fade-up');
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    fadeEls.forEach(el => io.observe(el));
+
+    // ハンバーガー
+    document.querySelector('.hamburger').addEventListener('click', () => {
+      const nav = document.querySelector('.global-nav');
+      if (!nav) return;
+      const isOpen = nav.style.display === 'block';
+      nav.style.display = isOpen ? '' : 'block';
+      if (!isOpen) {
+        nav.style.position = 'absolute';
+        nav.style.top = '60px';
+        nav.style.left = '0'; nav.style.right = '0';
+        nav.style.background = 'white';
+        nav.style.padding = '1rem 2rem';
+        nav.style.boxShadow = '0 8px 24px rgba(0,0,0,0.1)';
+        nav.querySelector('ul').style.flexDirection = 'column';
+        nav.querySelector('ul').style.gap = '0.5rem';
+      }
+    });
+  </script>
+</body>
+</html>

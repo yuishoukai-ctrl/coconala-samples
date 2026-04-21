@@ -1,0 +1,1908 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nail Salon Lien | 名古屋・栄のネイルサロン</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@300;400;500;600&family=Zen+Old+Mincho:wght@400;500;600;700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:    #FAF5EF;
+      --warm:     #F3EBE0;
+      --charcoal: #2C2420;
+      --rose:     #C4846E;
+      --rose-lt:  #E8C4B4;
+      --sage:     #8BA08C;
+      --gold:     #B89A6A;
+      --muted:    #9A8A80;
+      --white:    #FFFDF9;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Jost', 'Zen Old Mincho', 'Hiragino Mincho ProN', serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* カスタムカーソル */
+    .cursor {
+      position: fixed;
+      width: 10px; height: 10px;
+      background: var(--rose);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s ease;
+    }
+    .cursor-ring {
+      position: fixed;
+      width: 36px; height: 36px;
+      border: 1px solid var(--rose);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: all 0.25s ease;
+      opacity: 0.6;
+    }
+
+    /* ナビ */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 4rem;
+      mix-blend-mode: multiply;
+    }
+    .nav-logo {
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+    .nav-logo img {
+      height: 44px;
+      width: auto;
+      transition: opacity 0.3s;
+    }
+    .nav-logo img:hover { opacity: 0.8; }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--charcoal);
+      opacity: 0.75;
+      transition: opacity 0.3s;
+    }
+    .nav-links a:hover { opacity: 1; }
+    .nav-reserve {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--white);
+      background: var(--rose);
+      padding: 0.65rem 1.5rem;
+      transition: background 0.3s;
+    }
+    .nav-reserve:hover { background: var(--charcoal); }
+
+    /* ハンバーガー（SP） */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: none;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+    .hamburger span {
+      display: block;
+      width: 26px; height: 1px;
+      background: var(--charcoal);
+      transition: all 0.3s;
+    }
+
+    /* ─── HERO ─── */
+    #hero {
+      position: relative;
+      height: 100svh;
+      min-height: 600px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 8rem 4rem 6rem;
+      position: relative;
+      z-index: 2;
+      overflow: hidden;
+    }
+    .hero-logo-bg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-45%, -52%);
+      width: 115%;
+      opacity: 0.13;
+      mix-blend-mode: multiply;
+      pointer-events: none;
+      user-select: none;
+      animation: fadeUp 1.8s 0.2s both;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--rose);
+      margin-bottom: 1.8rem;
+      opacity: 0;
+      animation: fadeUp 1s 0.3s forwards;
+    }
+
+    .hero-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(3.5rem, 7vw, 7rem);
+      font-weight: 300;
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      color: var(--charcoal);
+      opacity: 0;
+      animation: fadeUp 1s 0.5s forwards;
+    }
+    .hero-title em {
+      display: block;
+      font-style: italic;
+      color: var(--rose);
+    }
+
+    .hero-sub {
+      font-family: 'Zen Old Mincho', serif;
+      font-size: 0.85rem;
+      line-height: 2;
+      color: var(--muted);
+      margin-top: 2rem;
+      max-width: 320px;
+      opacity: 0;
+      animation: fadeUp 1s 0.7s forwards;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 3rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--charcoal);
+      opacity: 0;
+      animation: fadeUp 1s 0.9s forwards;
+    }
+    .hero-cta::after {
+      content: '';
+      display: block;
+      width: 60px; height: 1px;
+      background: var(--rose);
+      transition: width 0.4s;
+    }
+    .hero-cta:hover::after { width: 100px; }
+
+    /* 右側：ビジュアルパネル */
+    .hero-right {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-visual {
+      width: 100%; height: 100%;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #EDE2D8 0%, #D8C4B8 100%);
+    }
+    .hero-visual::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.08) 0%, rgba(44,36,32,0.04) 100%),
+        radial-gradient(circle at 20% 15%, rgba(255,255,255,0.45) 0%, transparent 28%);
+      pointer-events: none;
+    }
+    .hero-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      animation: floatIn 1.4s ease forwards;
+      opacity: 0;
+      transform: scale(1.03);
+    }
+
+    /* スクロールインジケーター */
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--muted);
+      opacity: 0;
+      animation: fadeUp 1s 1.5s forwards;
+      z-index: 5;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 50px;
+      background: linear-gradient(to bottom, var(--rose), transparent);
+      animation: scrollAnim 1.5s 2s infinite;
+    }
+
+    /* ─── CONCEPT ─── */
+    #concept {
+      padding: 8rem 4rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .concept-num {
+      font-family: 'Cinzel', serif;
+      font-size: 8rem;
+      font-weight: 300;
+      color: var(--warm);
+      line-height: 1;
+      position: absolute;
+      top: -2rem;
+      left: -2rem;
+      user-select: none;
+    }
+
+    .concept-text { position: relative; }
+    .concept-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--rose);
+      margin-bottom: 1.5rem;
+    }
+    .concept-heading {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 300;
+      line-height: 1.2;
+      margin-bottom: 2rem;
+    }
+    .concept-body {
+      font-family: 'Zen Old Mincho', serif;
+      font-size: 0.9rem;
+      line-height: 2.2;
+      color: var(--muted);
+    }
+
+    .concept-visual {
+      position: relative;
+      height: 480px;
+    }
+    .concept-block {
+      position: absolute;
+      border-radius: 2px;
+    }
+    .cb-1 {
+      width: 68%; height: 78%;
+      top: 0; right: 0;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(44,36,32,0.12);
+    }
+    .concept-block img {
+      width: 100%; height: 100%;
+      transition: transform 0.6s ease;
+    }
+    .cb-2 {
+      width: 44%; height: 50%;
+      bottom: 0; left: 0;
+      overflow: hidden;
+      box-shadow: 0 12px 30px rgba(44,36,32,0.16);
+    }
+    .concept-visual:hover img {
+      transform: scale(1.04);
+    }
+
+    /* ─── MENU ─── */
+    #menu {
+      background: var(--charcoal);
+      color: var(--white);
+      padding: 7rem 4rem;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 4rem;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .section-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--rose);
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2rem, 5vw, 4rem);
+      font-weight: 300;
+      line-height: 1;
+    }
+    .section-title em { font-style: italic; color: var(--rose); }
+
+    .menu-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .menu-card {
+      background: var(--charcoal);
+      position: relative;
+      overflow: hidden;
+      transition: background 0.4s;
+    }
+    .menu-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 2px;
+      background: var(--rose);
+      transition: width 0.5s;
+      z-index: 1;
+    }
+    .menu-card:hover { background: #3A2F2A; }
+    .menu-card:hover::before { width: 100%; }
+
+    .menu-card-photo {
+      width: 100%;
+      height: 200px;
+      overflow: hidden;
+      position: relative;
+    }
+    .menu-card-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      transition: transform 0.6s ease;
+      filter: brightness(0.92);
+    }
+    .menu-card:hover .menu-card-photo img { transform: scale(1.06); filter: brightness(1); }
+
+    .menu-card-body {
+      padding: 1.8rem 2rem 2rem;
+    }
+
+    .menu-icon {
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .menu-name {
+      font-family: 'Cinzel', serif;
+      font-size: 1.4rem;
+      font-weight: 300;
+      margin-bottom: 0.5rem;
+    }
+    .menu-name-ja {
+      font-family: 'Zen Old Mincho', serif;
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-bottom: 1.2rem;
+      letter-spacing: 0.1em;
+    }
+    .menu-desc {
+      font-family: 'Zen Old Mincho', serif;
+      font-size: 0.8rem;
+      line-height: 2;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 2rem;
+    }
+    .menu-price {
+      font-family: 'Cinzel', serif;
+      font-size: 1.6rem;
+      font-weight: 300;
+      color: var(--rose-lt);
+    }
+    .menu-price sup {
+      font-size: 0.7rem;
+      font-family: 'Jost', sans-serif;
+      letter-spacing: 0.1em;
+      vertical-align: super;
+    }
+
+    /* ─── GALLERY ─── */
+    #gallery {
+      padding: 7rem 4rem;
+      background: var(--cream);
+    }
+
+    .gallery-grid {
+      max-width: 1200px;
+      margin: 4rem auto 0;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-rows: repeat(3, 180px);
+      gap: 12px;
+    }
+
+    .gal-item {
+      border-radius: 2px;
+      overflow: hidden;
+      position: relative;
+    }
+    .gal-item:nth-child(1) { grid-column: 1/5; grid-row: 1/3; }
+    .gal-item:nth-child(2) { grid-column: 5/8; grid-row: 1/2; }
+    .gal-item:nth-child(3) { grid-column: 8/13; grid-row: 1/3; }
+    .gal-item:nth-child(4) { grid-column: 5/8; grid-row: 2/3; }
+    .gal-item:nth-child(5) { grid-column: 1/5; grid-row: 3/4; }
+    .gal-item:nth-child(6) { grid-column: 5/9; grid-row: 3/4; }
+    .gal-item:nth-child(7) { grid-column: 9/13; grid-row: 3/4; }
+
+    .gal-bg {
+      width: 100%;
+      height: 100%;
+      transition: transform 0.6s ease;
+      background: rgba(255,253,249,0.82);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .gal-item:hover .gal-bg { transform: scale(1.05); }
+    .gal-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center center;
+      padding: 10px;
+    }
+
+    /* ネイルパターン装飾 */
+    .gal-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      background: rgba(44,36,32,0.4);
+      transition: opacity 0.4s;
+      backdrop-filter: blur(2px);
+    }
+    .gal-item:hover .gal-overlay { opacity: 1; }
+    .gal-tag {
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: white;
+      font-family: 'Jost', sans-serif;
+    }
+
+    /* ─── PRICE ─── */
+    #price {
+      background: var(--warm);
+      padding: 7rem 4rem;
+    }
+    .price-table-wrap {
+      max-width: 800px;
+      margin: 4rem auto 0;
+    }
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 1.4rem 0;
+      border-bottom: 1px solid rgba(44,36,32,0.1);
+      gap: 2rem;
+    }
+    .price-row:first-child { border-top: 1px solid rgba(44,36,32,0.1); }
+    .price-name {
+      font-family: 'Zen Old Mincho', serif;
+      font-size: 0.95rem;
+    }
+    .price-dots {
+      flex: 1;
+      border-bottom: 1px dotted rgba(44,36,32,0.2);
+      margin: 0 1rem;
+      position: relative;
+      bottom: 4px;
+    }
+    .price-val {
+      font-family: 'Cinzel', serif;
+      font-size: 1.4rem;
+      font-weight: 300;
+      white-space: nowrap;
+      color: var(--rose);
+    }
+    .price-note {
+      font-family: 'Zen Old Mincho', serif;
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    /* ─── FLOW ─── */
+    #flow {
+      padding: 7rem 4rem;
+      background: var(--cream);
+    }
+    .flow-steps {
+      max-width: 900px;
+      margin: 4rem auto 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .flow-step {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 2rem;
+      align-items: flex-start;
+      position: relative;
+    }
+    .flow-step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 40px;
+      left: 39px;
+      width: 1px;
+      height: calc(100% + 0px);
+      background: linear-gradient(to bottom, var(--rose), var(--warm));
+    }
+    .flow-num-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+    .flow-num {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: var(--rose);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      font-weight: 300;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+    }
+    .flow-content {
+      padding: 0.4rem 0 3rem;
+    }
+    .flow-title {
+      font-family: 'Zen Old Mincho', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+    }
+    .flow-desc {
+      font-family: 'Zen Old Mincho', serif;
+      font-size: 0.85rem;
+      line-height: 2;
+      color: var(--muted);
+    }
+
+    /* ─── ABOUT ─── */
+    #about {
+      background: var(--charcoal);
+      color: var(--white);
+      padding: 7rem 4rem;
+    }
+    .about-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+    .about-visual {
+      position: relative;
+      height: 500px;
+    }
+    .about-block-1 {
+      position: absolute;
+      width: 75%;
+      height: 80%;
+      top: 0; right: 0;
+      border-radius: 2px;
+      overflow: hidden;
+      box-shadow: 0 22px 54px rgba(0,0,0,0.22);
+    }
+    .about-block-1::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(44,36,32,0.02) 0%, rgba(44,36,32,0.28) 100%),
+        radial-gradient(circle at 40% 40%, rgba(196,132,110,0.22) 0%, transparent 60%);
+    }
+    .about-block-1 img {
+      width: 100%;
+      height: 100%;
+    }
+    .about-block-2 {
+      position: absolute;
+      width: 44%;
+      height: 44%;
+      bottom: 0; left: 0;
+      background: var(--rose);
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .about-stat-num {
+      font-family: 'Cinzel', serif;
+      font-size: 3.5rem;
+      font-weight: 300;
+      line-height: 1;
+      color: white;
+    }
+    .about-stat-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+    }
+    .about-name {
+      font-family: 'Cinzel', serif;
+      font-size: 2.5rem;
+      font-weight: 300;
+      margin-bottom: 0.5rem;
+    }
+    .about-name-ja {
+      font-family: 'Zen Old Mincho', serif;
+      font-size: 0.85rem;
+      color: var(--rose-lt);
+      letter-spacing: 0.15em;
+      margin-bottom: 2rem;
+    }
+    .about-qual {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+    }
+    .about-qual-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: 'Zen Old Mincho', serif;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.6);
+    }
+    .about-qual-item::before {
+      content: '';
+      width: 20px; height: 1px;
+      background: var(--rose);
+      flex-shrink: 0;
+    }
+    .about-body {
+      font-family: 'Zen Old Mincho', serif;
+      font-size: 0.9rem;
+      line-height: 2.4;
+      color: rgba(255,255,255,0.55);
+    }
+
+    /* ─── ACCESS ─── */
+    #access {
+      padding: 7rem 4rem;
+      background: var(--cream);
+    }
+    .access-inner {
+      max-width: 1200px;
+      margin: 4rem auto 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .access-info dt {
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--rose);
+      margin-bottom: 0.4rem;
+      margin-top: 1.8rem;
+    }
+    .access-info dt:first-child { margin-top: 0; }
+    .access-info dd {
+      font-family: 'Zen Old Mincho', serif;
+      font-size: 0.9rem;
+      line-height: 1.8;
+      color: var(--charcoal);
+    }
+    .access-photos {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .access-photo {
+      width: 100%;
+      border-radius: 2px;
+      overflow: hidden;
+      position: relative;
+    }
+    .access-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+    .access-photo:hover img { transform: scale(1.03); }
+    .access-photo-label {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 0.6rem 1rem;
+      background: linear-gradient(to top, rgba(44,36,32,0.55), transparent);
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.85);
+      font-family: 'Jost', sans-serif;
+    }
+    .access-map-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--rose);
+      text-decoration: none;
+      border-bottom: 1px solid var(--rose-lt);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .access-map-btn:hover { color: var(--charcoal); border-color: var(--charcoal); }
+
+    /* ─── CONTACT ─── */
+    #contact {
+      background: var(--charcoal);
+      color: var(--white);
+      padding: 7rem 4rem;
+      text-align: center;
+    }
+    .contact-inner { max-width: 600px; margin: 0 auto; }
+    .contact-body {
+      font-family: 'Zen Old Mincho', serif;
+      font-size: 0.9rem;
+      line-height: 2.2;
+      color: rgba(255,255,255,0.5);
+      margin: 2rem 0 3rem;
+    }
+    .contact-btns {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--rose);
+      color: white;
+      text-decoration: none;
+      padding: 1.1rem 3rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      transition: background 0.3s, transform 0.2s;
+      min-width: 280px;
+      justify-content: center;
+    }
+    .btn-primary:hover { background: #B06050; transform: translateY(-1px); }
+    .btn-line {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      background: #06C755;
+      color: white;
+      text-decoration: none;
+      padding: 1.1rem 3rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      transition: background 0.3s, transform 0.2s;
+      min-width: 280px;
+      justify-content: center;
+    }
+    .btn-line:hover { background: #05A847; transform: translateY(-1px); }
+    .contact-tel {
+      margin-top: 2.5rem;
+      font-family: 'Cinzel', serif;
+      font-size: 2.2rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      color: var(--rose-lt);
+    }
+    .contact-tel-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.3rem;
+    }
+
+    /* ─── CAMPAIGN ─── */
+    #campaign {
+      background: linear-gradient(135deg, var(--rose) 0%, #B06050 100%);
+      padding: 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    #campaign::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 20% 50%, rgba(255,255,255,0.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .campaign-inner { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+    .campaign-tag {
+      display: inline-block;
+      border: 1px solid rgba(255,255,255,0.6);
+      color: white;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      padding: 0.3rem 1rem;
+      margin-bottom: 1.2rem;
+    }
+    .campaign-heading {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 300;
+      color: white;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+    .campaign-body {
+      font-family: 'Zen Old Mincho', serif;
+      font-size: 0.85rem;
+      line-height: 2;
+      color: rgba(255,255,255,0.85);
+      margin-bottom: 1.5rem;
+    }
+    .campaign-note {
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.6);
+      margin-top: 0.8rem;
+    }
+    .btn-campaign {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      background: white;
+      color: var(--rose);
+      text-decoration: none;
+      padding: 1rem 2.5rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+    .btn-campaign:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.2); }
+
+    /* ─── VOICE ─── */
+    #voice {
+      background: var(--cream);
+      padding: 7rem 4rem;
+    }
+    .voice-grid {
+      max-width: 1200px;
+      margin: 4rem auto 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+    .voice-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 2px;
+      box-shadow: 0 2px 20px rgba(44,36,32,0.06);
+      position: relative;
+    }
+    .voice-stars {
+      color: var(--gold);
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+    }
+    .voice-text {
+      font-family: 'Zen Old Mincho', serif;
+      font-size: 0.85rem;
+      line-height: 2.2;
+      color: var(--charcoal);
+      margin-bottom: 1.5rem;
+    }
+    .voice-tag {
+      display: inline-block;
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--rose);
+      background: rgba(196,132,110,0.1);
+      padding: 0.2rem 0.6rem;
+      border-radius: 1px;
+      margin-bottom: 0.8rem;
+    }
+    .voice-author {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      border-top: 1px solid rgba(44,36,32,0.08);
+      padding-top: 1rem;
+    }
+    .voice-avatar {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--warm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .voice-name {
+      font-family: 'Zen Old Mincho', serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--charcoal);
+    }
+    .voice-meta {
+      font-size: 0.68rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+    @media (max-width: 900px) {
+      .voice-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+      #voice { padding: 5rem 1.5rem; }
+    }
+
+    /* ─── FAQ ─── */
+    #faq {
+      background: var(--warm);
+      padding: 7rem 4rem;
+    }
+    .faq-list {
+      max-width: 800px;
+      margin: 4rem auto 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .faq-item {
+      border-bottom: 1px solid rgba(44,36,32,0.12);
+    }
+    .faq-item:first-child { border-top: 1px solid rgba(44,36,32,0.12); }
+    .faq-q {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.4rem 0;
+      cursor: pointer;
+      list-style: none;
+      font-family: 'Zen Old Mincho', serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--charcoal);
+      user-select: none;
+    }
+    .faq-q::-webkit-details-marker { display: none; }
+    .faq-q-text::before {
+      content: 'Q. ';
+      color: var(--rose);
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      font-weight: 300;
+      margin-right: 0.3rem;
+    }
+    .faq-icon {
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      border: 1px solid var(--rose);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--rose);
+      font-size: 1rem;
+      transition: transform 0.3s;
+    }
+    details[open] .faq-icon { transform: rotate(45deg); }
+    .faq-a {
+      padding: 0 0 1.4rem 1.4rem;
+      font-family: 'Zen Old Mincho', serif;
+      font-size: 0.85rem;
+      line-height: 2.2;
+      color: var(--muted);
+    }
+    @media (max-width: 900px) {
+      #faq { padding: 5rem 1.5rem; }
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: #1C1410;
+      color: rgba(255,255,255,0.3);
+      padding: 0;
+    }
+    .footer-top {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 4rem 3rem;
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 4rem;
+      align-items: start;
+    }
+    .footer-logo img {
+      height: 58px;
+      width: auto;
+      display: block;
+      background: var(--cream);
+      padding: 0.7rem 1rem 0.65rem;
+      border-radius: 2px;
+    }
+    .footer-tagline {
+      font-family: 'Zen Old Mincho', serif;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.3);
+      margin-top: 0.5rem;
+      line-height: 1.8;
+    }
+    .footer-nav-group {}
+    .footer-nav-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--rose);
+      margin-bottom: 1rem;
+    }
+    .footer-nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .footer-nav-list a {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      transition: color 0.2s;
+    }
+    .footer-nav-list a:hover { color: rgba(255,255,255,0.8); }
+    .footer-sns {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .footer-sns a {
+      width: 36px; height: 36px;
+      border: 1px solid rgba(255,255,255,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.4);
+      font-size: 0.85rem;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .footer-sns a:hover { border-color: var(--rose); color: var(--rose); }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 1.5rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+    }
+    @media (max-width: 900px) {
+      .footer-top { grid-template-columns: 1fr; gap: 2.5rem; padding: 3rem 1.5rem 2rem; }
+      .footer-bottom { flex-direction: column; gap: 0.8rem; text-align: center; padding: 1.5rem; }
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes floatIn {
+      from { opacity: 0; transform: scale(0.9) rotate(-5deg); }
+      to   { opacity: 1; transform: scale(1) rotate(0deg); }
+    }
+    @keyframes scrollAnim {
+      0%   { transform: scaleY(0); transform-origin: top; }
+      50%  { transform: scaleY(1); transform-origin: top; }
+      51%  { transform: scaleY(1); transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; }
+    }
+
+    /* スクロールアニメーション */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-links, .nav-reserve { display: none; }
+      .hamburger { display: flex; }
+
+      #hero { grid-template-columns: 1fr; height: auto; min-height: 100svh; }
+      .hero-left { padding: 7rem 1.5rem 4rem; }
+      .hero-right { height: 300px; }
+      .hero-visual img { object-position: center 42%; }
+
+      #concept {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        padding: 5rem 1.5rem;
+      }
+      .concept-visual { height: 300px; }
+
+      #menu { padding: 5rem 1.5rem; }
+      .menu-grid { grid-template-columns: 1fr; }
+
+      #gallery { padding: 5rem 1.5rem; }
+      .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+      }
+      .gal-item { grid-column: auto!important; grid-row: auto!important; height: 160px; }
+
+      #price { padding: 5rem 1.5rem; }
+      #flow { padding: 5rem 1.5rem; }
+
+      #about { padding: 5rem 1.5rem; }
+      .about-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .about-visual { height: 300px; }
+
+      #access { padding: 5rem 1.5rem; }
+      .access-inner { grid-template-columns: 1fr; }
+
+      #contact { padding: 5rem 1.5rem; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem 1.5rem; }
+
+      .section-header { flex-direction: column; gap: 1rem; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- カーソル -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- ナビ -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <img src="assets/images/logo-lien-luxury.png" alt="Nail Salon Lien">
+    </a>
+    <ul class="nav-links">
+      <li><a href="#concept">Concept</a></li>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#price">Price</a></li>
+      <li><a href="#voice">Voice</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#access">Access</a></li>
+    </ul>
+    <a href="#contact" class="nav-reserve">予約する</a>
+    <button class="hamburger" aria-label="メニュー">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ヒーロー -->
+  <section id="hero">
+    <div class="hero-left">
+      <img src="assets/images/logo-lien-pink.jpg" alt="" class="hero-logo-bg" aria-hidden="true">
+      <p class="hero-eyebrow">Nail Salon Lien — Nagoya Sakae</p>
+      <h1 class="hero-title">
+        Craft your<br>
+        <em>perfect nail.</em>
+      </h1>
+      <p class="hero-sub">
+        爪の先まで、美しく。<br>
+        あなたの日常に、小さな贅沢を。<br>
+        名古屋・栄のプライベートネイルサロン。
+      </p>
+      <a href="#menu" class="hero-cta">メニューを見る</a>
+    </div>
+    <div class="hero-right">
+      <div class="hero-visual">
+        <img src="assets/images/hero-nails.png" alt="上品なネイルデザインを施した手元のイメージ">
+      </div>
+    </div>
+    <div class="scroll-hint">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- コンセプト -->
+  <section id="concept">
+    <div class="concept-text reveal">
+      <p class="concept-label">Our Concept</p>
+      <h2 class="concept-heading">
+        爪は、あなたの<br>
+        物語を語る。
+      </h2>
+      <p class="concept-body">
+        Lienはフランス語で「絆」を意味します。<br>
+        ネイリストとお客様が丁寧に向き合い、<br>
+        あなただけのデザインを一緒に作り上げる。<br>
+        <br>
+        忙しい日々の中でも、指先の美しさは<br>
+        あなたの自信と喜びになります。<br>
+        少し贅沢な時間を、ぜひご自身に。
+      </p>
+    </div>
+    <div class="concept-visual reveal reveal-delay-2">
+      <div class="concept-block cb-1">
+        <img src="assets/images/salon-interior.jpg" alt="Nail Salon Lien の店内イメージ" style="object-fit:cover;width:100%;height:100%;">
+      </div>
+      <div class="concept-block cb-2">
+        <img src="assets/images/gallery-rose-glitter.png" alt="ローズグリッターのネイルデザイン">
+      </div>
+    </div>
+  </section>
+
+  <!-- メニュー -->
+  <section id="menu">
+    <div class="section-header reveal">
+      <div>
+        <p class="section-label">Menu</p>
+        <h2 class="section-title">施術<em>メニュー</em></h2>
+      </div>
+    </div>
+    <div class="menu-grid">
+      <div class="menu-card reveal">
+        <div class="menu-card-photo">
+          <img src="assets/images/menu-one-color.jpg" alt="ワンカラーネイル">
+        </div>
+        <div class="menu-card-body">
+          <span class="menu-icon">✦</span>
+          <p class="menu-name">One Color</p>
+          <p class="menu-name-ja">ワンカラー</p>
+          <p class="menu-desc">シンプルに美しい単色仕上げ。<br>オフ込みで丁寧に施術します。</p>
+          <p class="menu-price"><sup>¥</sup>4,500<sup>〜</sup></p>
+        </div>
+      </div>
+      <div class="menu-card reveal reveal-delay-1">
+        <div class="menu-card-photo">
+          <img src="assets/images/menu-art-design.jpg" alt="アートデザインネイル">
+        </div>
+        <div class="menu-card-body">
+          <span class="menu-icon">✧</span>
+          <p class="menu-name">Art Design</p>
+          <p class="menu-name-ja">アートデザイン</p>
+          <p class="menu-desc">フレンチ・グラデーション・<br>ニュアンスなど人気デザイン全般。</p>
+          <p class="menu-price"><sup>¥</sup>7,800<sup>〜</sup></p>
+        </div>
+      </div>
+      <div class="menu-card reveal reveal-delay-2">
+        <div class="menu-card-photo">
+          <img src="assets/images/menu-hand-care.jpg" alt="ハンドケア">
+        </div>
+        <div class="menu-card-body">
+          <span class="menu-icon">❋</span>
+          <p class="menu-name">Hand Care</p>
+          <p class="menu-name-ja">ハンドケア</p>
+          <p class="menu-desc">甘皮処理・保湿・爪の形成を含む<br>本格ケアコース。</p>
+          <p class="menu-price"><sup>¥</sup>3,500<sup>〜</sup></p>
+        </div>
+      </div>
+      <div class="menu-card reveal">
+        <div class="menu-card-photo">
+          <img src="assets/images/menu-gel-removal.jpg" alt="ジェルオフ">
+        </div>
+        <div class="menu-card-body">
+          <span class="menu-icon">◈</span>
+          <p class="menu-name">Gel Removal</p>
+          <p class="menu-name-ja">ジェルオフ</p>
+          <p class="menu-desc">他店施術のオフも承ります。<br>爪への負担を最小限に丁寧に。</p>
+          <p class="menu-price"><sup>¥</sup>2,200<sup>〜</sup></p>
+        </div>
+      </div>
+      <div class="menu-card reveal reveal-delay-1">
+        <div class="menu-card-photo">
+          <img src="assets/images/menu-nail-repair.jpg" alt="ネイルリペア">
+        </div>
+        <div class="menu-card-body">
+          <span class="menu-icon">◇</span>
+          <p class="menu-name">Nail Repair</p>
+          <p class="menu-name-ja">ネイルリペア</p>
+          <p class="menu-desc">折れた・欠けたネイルを<br>自然に補修します。</p>
+          <p class="menu-price"><sup>¥</sup>550<sup>/本〜</sup></p>
+        </div>
+      </div>
+      <div class="menu-card reveal reveal-delay-2">
+        <div class="menu-card-photo">
+          <img src="assets/images/menu-bridal.jpg" alt="ブライダルネイル">
+        </div>
+        <div class="menu-card-body">
+          <span class="menu-icon">✿</span>
+          <p class="menu-name">Bridal</p>
+          <p class="menu-name-ja">ブライダルネイル</p>
+          <p class="menu-desc">大切な1日のために。<br>事前カウンセリング付きの特別コース。</p>
+          <p class="menu-price"><sup>¥</sup>15,000<sup>〜</sup></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ギャラリー -->
+  <section id="gallery">
+    <div class="section-header reveal">
+      <div>
+        <p class="section-label">Gallery</p>
+        <h2 class="section-title">作品<em>ギャラリー</em></h2>
+      </div>
+    </div>
+      <div class="gallery-grid reveal">
+        <div class="gal-item">
+        <div class="gal-bg"><img src="assets/images/gallery-rose-glitter.png" alt="ローズグリッターネイル"></div>
+        <div class="gal-overlay"><span class="gal-tag">Rose Glitter</span></div>
+      </div>
+      <div class="gal-item">
+        <div class="gal-bg"><img src="assets/images/gallery-dark-nuance.png" alt="ダークニュアンスネイル"></div>
+        <div class="gal-overlay"><span class="gal-tag">Dark Nuance</span></div>
+      </div>
+      <div class="gal-item">
+        <div class="gal-bg"><img src="assets/images/gallery-milk-french.png" alt="ミルクフレンチネイル"></div>
+        <div class="gal-overlay"><span class="gal-tag">Milk French</span></div>
+      </div>
+      <div class="gal-item">
+        <div class="gal-bg"><img src="assets/images/gallery-sage-green.png" alt="セージグリーンネイル"></div>
+        <div class="gal-overlay"><span class="gal-tag">Sage Green</span></div>
+      </div>
+      <div class="gal-item">
+        <div class="gal-bg"><img src="assets/images/gallery-gold-marble.png" alt="ゴールドマーブルネイル"></div>
+        <div class="gal-overlay"><span class="gal-tag">Gold Marble</span></div>
+      </div>
+      <div class="gal-item">
+        <div class="gal-bg"><img src="assets/images/gallery-ice-blue.png" alt="アイスブルーネイル"></div>
+        <div class="gal-overlay"><span class="gal-tag">Ice Blue</span></div>
+      </div>
+      <div class="gal-item">
+        <div class="gal-bg"><img src="assets/images/gallery-cherry-blossom.png" alt="チェリーブロッサムネイル"></div>
+        <div class="gal-overlay"><span class="gal-tag">Cherry Blossom</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 料金表 -->
+  <section id="price">
+    <div class="section-header reveal">
+      <div>
+        <p class="section-label">Price</p>
+        <h2 class="section-title">料金<em>一覧</em></h2>
+      </div>
+    </div>
+    <div class="price-table-wrap reveal">
+      <div class="price-row">
+        <span class="price-name">ワンカラー（手・足）</span>
+        <span class="price-dots"></span>
+        <span class="price-val">¥4,500〜</span>
+      </div>
+      <div class="price-row">
+        <span class="price-name">グラデーション</span>
+        <span class="price-dots"></span>
+        <span class="price-val">¥6,500〜</span>
+      </div>
+      <div class="price-row">
+        <span class="price-name">フレンチ</span>
+        <span class="price-dots"></span>
+        <span class="price-val">¥6,800〜</span>
+      </div>
+      <div class="price-row">
+        <span class="price-name">ニュアンスアート</span>
+        <span class="price-dots"></span>
+        <span class="price-val">¥8,500〜</span>
+      </div>
+      <div class="price-row">
+        <span class="price-name">フルアート（10本）</span>
+        <span class="price-dots"></span>
+        <span class="price-val">¥12,000〜</span>
+      </div>
+      <div class="price-row">
+        <span class="price-name">ハンドケア＋ワンカラー</span>
+        <span class="price-dots"></span>
+        <span class="price-val">¥7,500〜</span>
+      </div>
+      <div class="price-row">
+        <span class="price-name">ジェルオフ（当店施術）</span>
+        <span class="price-dots"></span>
+        <span class="price-val">¥0（無料）</span>
+      </div>
+      <div class="price-row">
+        <span class="price-name">ジェルオフ（他店施術）</span>
+        <span class="price-dots"></span>
+        <span class="price-val">¥2,200〜</span>
+      </div>
+      <p class="price-note">※ 表示価格はすべて税込です。デザインにより変動する場合があります。</p>
+    </div>
+  </section>
+
+  <!-- ご来店の流れ -->
+  <section id="flow">
+    <div class="section-header reveal">
+      <div>
+        <p class="section-label">How to visit</p>
+        <h2 class="section-title">ご来店の<em>流れ</em></h2>
+      </div>
+    </div>
+    <div class="flow-steps">
+      <div class="flow-step reveal">
+        <div class="flow-num-wrap">
+          <div class="flow-num">1</div>
+        </div>
+        <div class="flow-content">
+          <p class="flow-title">ご予約</p>
+          <p class="flow-desc">ホームページ・LINE・お電話からご予約ください。<br>ご希望のデザインや気になることはお気軽にご相談を。</p>
+        </div>
+      </div>
+      <div class="flow-step reveal reveal-delay-1">
+        <div class="flow-num-wrap">
+          <div class="flow-num">2</div>
+        </div>
+        <div class="flow-content">
+          <p class="flow-title">カウンセリング</p>
+          <p class="flow-desc">来店後、ご希望のデザインや爪の状態を確認します。<br>初めての方も安心してご相談いただけます。</p>
+        </div>
+      </div>
+      <div class="flow-step reveal reveal-delay-2">
+        <div class="flow-num-wrap">
+          <div class="flow-num">3</div>
+        </div>
+        <div class="flow-content">
+          <p class="flow-title">施術</p>
+          <p class="flow-desc">丁寧にオフ→ケア→カラーリングを行います。<br>施術中はくつろいでお過ごしください。</p>
+        </div>
+      </div>
+      <div class="flow-step reveal reveal-delay-3">
+        <div class="flow-num-wrap">
+          <div class="flow-num">4</div>
+        </div>
+        <div class="flow-content">
+          <p class="flow-title">アフターケアのご案内</p>
+          <p class="flow-desc">持ちをよくするためのホームケアをご案内します。<br>次回ご予約もこのタイミングで承ります。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- キャンペーン -->
+  <section id="campaign">
+    <div class="campaign-inner reveal">
+      <span class="campaign-tag">Limited Offer</span>
+      <h2 class="campaign-heading">初回限定<br>20% OFF</h2>
+      <p class="campaign-body">
+        はじめてのご来店に感謝を込めて、<br>
+        全メニュー20%OFFでご提供いたします。<br>
+        この機会にぜひ、Lienの施術をお試しください。
+      </p>
+      <a href="#contact" class="btn-campaign">今すぐ予約する →</a>
+      <p class="campaign-note">※ 初回ご来店のお客様限定。オフ代・ハンドケア込みのメニューに適用。</p>
+    </div>
+  </section>
+
+  <!-- お客様の声 -->
+  <section id="voice">
+    <div class="section-header reveal">
+      <div>
+        <p class="section-label">Voice</p>
+        <h2 class="section-title">お客様の<em>声</em></h2>
+      </div>
+    </div>
+    <div class="voice-grid">
+      <div class="voice-card reveal">
+        <div class="voice-tag">Art Design</div>
+        <div class="voice-stars">★★★★★</div>
+        <p class="voice-text">ニュアンスアートをお願いしたら、想像以上に可愛くて大満足！持ちもよく、3週間経っても浮きがまったくありませんでした。次回もお願いします。</p>
+        <div class="voice-author">
+          <div class="voice-avatar">🌸</div>
+          <div>
+            <p class="voice-name">M.T さん</p>
+            <p class="voice-meta">30代 · 会社員 · 3回目ご来店</p>
+          </div>
+        </div>
+      </div>
+      <div class="voice-card reveal reveal-delay-1">
+        <div class="voice-tag">Bridal</div>
+        <div class="voice-stars">★★★★★</div>
+        <p class="voice-text">結婚式のブライダルネイルをお任せしました。事前カウンセリングで丁寧に希望を聞いていただき、当日も緊張せず過ごせました。本当にありがとうございました。</p>
+        <div class="voice-author">
+          <div class="voice-avatar">💍</div>
+          <div>
+            <p class="voice-name">A.K さん</p>
+            <p class="voice-meta">20代 · 新婦 · 特別なご来店</p>
+          </div>
+        </div>
+      </div>
+      <div class="voice-card reveal reveal-delay-2">
+        <div class="voice-tag">Hand Care</div>
+        <div class="voice-stars">★★★★★</div>
+        <p class="voice-text">ハンドケア+ワンカラーで来店。甘皮処理が丁寧で、施術後の爪の見た目が全然違います。空間も落ち着いていてリラックスできました。リピ確定です！</p>
+        <div class="voice-author">
+          <div class="voice-avatar">✨</div>
+          <div>
+            <p class="voice-name">Y.S さん</p>
+            <p class="voice-meta">40代 · 自営業 · 5回目ご来店</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- アバウト -->
+  <section id="about">
+    <div class="about-inner">
+      <div class="about-visual reveal">
+        <div class="about-block-1"><img src="assets/images/about-artist.png" alt="ネイリストが施術している様子"></div>
+        <div class="about-block-2">
+          <p class="about-stat-num">8年</p>
+          <p class="about-stat-label">経験年数</p>
+        </div>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <p class="section-label">Nail Artist</p>
+        <p class="about-name">Yuki Tanaka</p>
+        <p class="about-name-ja">田中 有紀</p>
+        <div class="about-qual">
+          <div class="about-qual-item">JNAジェルネイル検定 上級</div>
+          <div class="about-qual-item">ネイリスト技能検定 1級</div>
+          <div class="about-qual-item">都内サロン勤務8年を経て独立</div>
+          <div class="about-qual-item">年間施術数 500名以上</div>
+        </div>
+        <p class="about-body">
+          「爪を通じて、その方の魅力を引き出したい」<br>
+          そんな想いでネイリストの道へ。<br>
+          お客様一人ひとりの爪の状態やライフスタイルに合わせた
+          提案を大切にしています。<br>
+          <br>
+          お子様連れの方も大歓迎です。<br>
+          ゆっくりリラックスできる空間でお待ちしております。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="section-header reveal">
+      <div>
+        <p class="section-label">FAQ</p>
+        <h2 class="section-title">よくある<em>ご質問</em></h2>
+      </div>
+    </div>
+    <div class="faq-list reveal">
+
+      <details class="faq-item">
+        <summary class="faq-q">
+          <span class="faq-q-text">初めてでも大丈夫ですか？</span>
+          <span class="faq-icon">+</span>
+        </summary>
+        <p class="faq-a">もちろんです！初めてのお客様も大歓迎です。来店後にカウンセリングを行いますので、ご希望や爪の状態について遠慮なくお話しください。デザインのご提案もいたします。</p>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-q">
+          <span class="faq-q-text">爪が薄い・弱いのですが施術できますか？</span>
+          <span class="faq-icon">+</span>
+        </summary>
+        <p class="faq-a">はい、対応可能です。爪の状態に合わせたジェルや施術方法をご提案します。爪を傷めないよう丁寧に施術しますのでご安心ください。</p>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-q">
+          <span class="faq-q-text">ジェルネイルの持ちはどのくらいですか？</span>
+          <span class="faq-icon">+</span>
+        </summary>
+        <p class="faq-a">個人差はありますが、平均3〜4週間程度です。ホームケア（手洗い後の保湿など）を続けていただくことで、より長持ちしやすくなります。</p>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-q">
+          <span class="faq-q-text">他サロンのジェルオフはできますか？</span>
+          <span class="faq-icon">+</span>
+        </summary>
+        <p class="faq-a">はい、承っております。他店施術のジェルオフは¥2,200〜です。爪への負担を最小限に、丁寧にオフします。爪の状態によっては追加料金が発生する場合があります。</p>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-q">
+          <span class="faq-q-text">子ども連れでも来店できますか？</span>
+          <span class="faq-icon">+</span>
+        </summary>
+        <p class="faq-a">大歓迎です！ただし、施術中はお子様から目を離す場面もございます。安全のため、ベビーカーの方は事前にお声がけください。</p>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-q">
+          <span class="faq-q-text">予約なしでも来店できますか？</span>
+          <span class="faq-icon">+</span>
+        </summary>
+        <p class="faq-a">プライベートサロンのため、完全予約制となっております。お電話・LINE・Webフォームからご予約のうえご来店ください。</p>
+      </details>
+
+    </div>
+  </section>
+
+  <!-- アクセス -->
+  <section id="access">
+    <div class="section-header reveal">
+      <div>
+        <p class="section-label">Access</p>
+        <h2 class="section-title">アクセス<em>・営業時間</em></h2>
+      </div>
+    </div>
+    <div class="access-inner">
+      <div class="reveal">
+        <dl class="access-info">
+          <dt>住所</dt>
+          <dd>〒460-0008<br>愛知県名古屋市中区栄3-○-○<br>○○ビル 3F</dd>
+          <dt>アクセス</dt>
+          <dd>地下鉄「栄駅」5番出口より徒歩3分</dd>
+          <dt>営業時間</dt>
+          <dd>火〜土：10:00 〜 20:00<br>日・祝：10:00 〜 18:00</dd>
+          <dt>定休日</dt>
+          <dd>毎週月曜日</dd>
+          <dt>電話番号</dt>
+          <dd>052-○○○-○○○○</dd>
+          <dt>駐車場</dt>
+          <dd>近隣コインパーキングをご利用ください</dd>
+        </dl>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <div class="access-photos">
+          <div class="access-photo" style="height: 260px;">
+            <img src="assets/images/salon-exterior.jpg" alt="Nail Salon Lien 外観">
+            <span class="access-photo-label">Exterior — 店舗外観</span>
+          </div>
+          <div class="access-photo" style="height: 200px;">
+            <img src="assets/images/salon-interior.jpg" alt="Nail Salon Lien 店内">
+            <span class="access-photo-label">Interior — 店内</span>
+          </div>
+        </div>
+        <a href="#" class="access-map-btn">📍 Google Map で見る →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- コンタクト -->
+  <section id="contact">
+    <div class="contact-inner reveal">
+      <p class="section-label" style="justify-content:center; display:block;">Contact &amp; Reservation</p>
+      <h2 class="section-title" style="font-size: clamp(2rem,5vw,4rem);">ご予約・<em>お問い合わせ</em></h2>
+      <p class="contact-body">
+        初めての方もお気軽にどうぞ。<br>
+        ご希望のデザインやご不明な点は<br>
+        LINE・お電話・フォームにてお気軽にお問い合わせください。
+      </p>
+      <div class="contact-btns">
+        <a href="#" class="btn-primary">✉ Web予約フォーム</a>
+        <a href="#" class="btn-line">LINE で相談する</a>
+      </div>
+      <p class="contact-tel">052-○○○-○○○○</p>
+      <p class="contact-tel-label">受付時間 10:00 〜 19:00（月曜定休）</p>
+    </div>
+  </section>
+
+  <!-- フッター -->
+  <footer>
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">
+        <img src="assets/images/logo-lien-luxury.png" alt="Nail Salon Lien">
+      </div>
+        <p class="footer-tagline">
+          名古屋・栄のプライベートネイルサロン<br>
+          火〜土 10:00–20:00 ／ 日祝 10:00–18:00
+        </p>
+        <div class="footer-sns">
+          <a href="#" aria-label="Instagram">📷</a>
+          <a href="#" aria-label="LINE">💬</a>
+          <a href="#" aria-label="X (Twitter)">𝕏</a>
+        </div>
+      </div>
+      <div class="footer-nav-group">
+        <p class="footer-nav-label">Menu</p>
+        <ul class="footer-nav-list">
+          <li><a href="#concept">Concept</a></li>
+          <li><a href="#menu">施術メニュー</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#price">料金一覧</a></li>
+        </ul>
+      </div>
+      <div class="footer-nav-group">
+        <p class="footer-nav-label">Info</p>
+        <ul class="footer-nav-list">
+          <li><a href="#flow">ご来店の流れ</a></li>
+          <li><a href="#voice">お客様の声</a></li>
+          <li><a href="#faq">よくある質問</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#access">Access</a></li>
+          <li><a href="#contact">予約・お問い合わせ</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Nail Salon Lien. All rights reserved.</p>
+      <p>〒460-0008 愛知県名古屋市中区栄3-○-○</p>
+    </div>
+  </footer>
+
+  <script>
+    // カスタムカーソル
+    const cursor = document.getElementById('cursor');
+    const ring   = document.getElementById('cursorRing');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.left = mx + 'px';
+      cursor.style.top  = my + 'px';
+    });
+
+    function animateRing() {
+      rx += (mx - rx) * 0.12;
+      ry += (my - ry) * 0.12;
+      ring.style.left = rx + 'px';
+      ring.style.top  = ry + 'px';
+      requestAnimationFrame(animateRing);
+    }
+    animateRing();
+
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.style.transform = 'translate(-50%,-50%) scale(2)';
+        ring.style.transform   = 'translate(-50%,-50%) scale(1.5)';
+        ring.style.opacity     = '0.3';
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.style.transform = 'translate(-50%,-50%) scale(1)';
+        ring.style.transform   = 'translate(-50%,-50%) scale(1)';
+        ring.style.opacity     = '0.6';
+      });
+    });
+
+    // スクロールアニメーション
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
+
+    // ハンバーガーメニュー
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks  = document.querySelector('.nav-links');
+    const navReserve = document.querySelector('.nav-reserve');
+    hamburger.addEventListener('click', () => {
+      const isOpen = navLinks.style.display === 'flex';
+      if (isOpen) {
+        navLinks.style.display = '';
+        navReserve.style.display = '';
+      } else {
+        navLinks.style.cssText = 'display:flex; flex-direction:column; position:fixed; top:60px; left:0; right:0; background:rgba(250,245,239,0.97); backdrop-filter:blur(12px); padding:1.5rem 1.5rem; gap:1.2rem; z-index:99; border-bottom:1px solid rgba(44,36,32,0.1);';
+        navReserve.style.cssText = 'display:block; margin:0 1.5rem 1.5rem; position:fixed; top:auto; left:0; right:0; z-index:99; text-align:center; padding:1rem;';
+      }
+    });
+    // ナビリンククリックで閉じる
+    document.querySelectorAll('.nav-links a').forEach(a => {
+      a.addEventListener('click', () => {
+        navLinks.style.display = '';
+        navReserve.style.display = '';
+      });
+    });
+
+    // ナビ背景
+    window.addEventListener('scroll', () => {
+      const nav = document.querySelector('nav');
+      if (window.scrollY > 80) {
+        nav.style.background = 'rgba(250,245,239,0.92)';
+        nav.style.backdropFilter = 'blur(12px)';
+        nav.style.mixBlendMode = 'normal';
+      } else {
+        nav.style.background = '';
+        nav.style.backdropFilter = '';
+        nav.style.mixBlendMode = 'multiply';
+      }
+    });
+
+    // スムーズスクロール
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

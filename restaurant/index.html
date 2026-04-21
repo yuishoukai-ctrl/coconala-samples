@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cafe & Bar HANA | 名古屋・覚王山</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500&family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --main:    #568EA3;
+      --light:   #C9E4E7;
+      --dark:    #3E6675;
+      --text:    #444444;
+      --light-bg:#F5FAFB;
+      --white:   #ffffff;
+      --gray:    #888888;
+      --border:  #DDDDDD;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+      color: var(--text);
+      background: var(--white);
+      line-height: 1.7;
+    }
+
+    img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ─── ヘッダー・ナビ ─── */
+    #header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow 0.3s;
+    }
+    #header.scrolled { box-shadow: 0 2px 16px rgba(0,0,0,0.08); }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--dark);
+      letter-spacing: 0.1em;
+    }
+    .logo span {
+      font-size: 0.65rem;
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      display: block;
+      color: var(--main);
+      text-transform: uppercase;
+      margin-top: -2px;
+    }
+
+    .global-nav ul {
+      display: flex;
+      list-style: none;
+      gap: 0;
+    }
+    .global-nav a {
+      display: block;
+      padding: 0.5rem 1.1rem;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text);
+      transition: color 0.2s, background 0.2s;
+      position: relative;
+    }
+    .global-nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -1px; left: 50%; right: 50%;
+      height: 2px;
+      background: var(--main);
+      transition: left 0.3s, right 0.3s;
+    }
+    .global-nav a:hover { color: var(--main); }
+    .global-nav a:hover::after { left: 0; right: 0; }
+
+    .nav-reserve {
+      background: var(--main);
+      color: white !important;
+      padding: 0.6rem 1.4rem;
+      border-radius: 2px;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      transition: background 0.2s !important;
+      white-space: nowrap;
+    }
+    .nav-reserve:hover { background: var(--dark) !important; }
+    .nav-reserve::after { display: none !important; }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 26px; height: 2px;
+      background: var(--text);
+      transition: all 0.3s;
+    }
+
+    /* ─── ヒーロースライダー ─── */
+    #hero {
+      margin-top: 70px;
+      position: relative;
+      height: calc(100svh - 70px);
+      min-height: 480px;
+      overflow: hidden;
+    }
+
+    .slides {
+      display: flex;
+      width: 300%;
+      height: 100%;
+      animation: slideShow 12s infinite;
+    }
+
+    .slide {
+      width: calc(100% / 3);
+      height: 100%;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .slide-bg {
+      position: absolute;
+      inset: 0;
+      transform: scale(1.05);
+      animation: kenburns 12s infinite;
+      isolation: isolate;
+    }
+    .slide-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.24) 44%, rgba(0,0,0,0.2) 100%);
+      z-index: 1;
+    }
+    .slide-bg img {
+      position: relative;
+      z-index: 0;
+    }
+
+    @keyframes kenburns {
+      0%, 100% { transform: scale(1.05) translate(0, 0); }
+      33%       { transform: scale(1.08) translate(-1%, -1%); }
+      66%       { transform: scale(1.06) translate(1%, 0.5%); }
+    }
+
+    .slide-deco {
+      display: none;
+    }
+
+    .slide-content {
+      position: absolute;
+      bottom: 18%;
+      left: 8%;
+      color: white;
+      z-index: 2;
+    }
+    .slide-eyebrow {
+      font-family: 'Lato', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 300;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--light);
+      margin-bottom: 1rem;
+    }
+    .slide-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 1.2rem;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.4);
+    }
+    .slide-title em { font-style: italic; }
+    .slide-desc {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.85);
+      max-width: 400px;
+      line-height: 1.8;
+      margin-bottom: 2rem;
+    }
+    .slide-btn {
+      display: inline-block;
+      padding: 0.85rem 2.5rem;
+      background: var(--main);
+      color: white;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      transition: background 0.3s;
+    }
+    .slide-btn:hover { background: var(--dark); }
+
+    /* スライドドット */
+    .slide-dots {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      z-index: 10;
+    }
+    .slide-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.4);
+      border: 1px solid rgba(255,255,255,0.6);
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .slide-dot.active { background: white; }
+
+    @keyframes slideShow {
+      0%, 28%   { transform: translateX(0); }
+      33%, 61%  { transform: translateX(calc(-100% / 3)); }
+      66%, 94%  { transform: translateX(calc(-200% / 3)); }
+      99%, 100% { transform: translateX(0); }
+    }
+
+    /* ─── セクション共通 ─── */
+    section { padding: 5rem 0; }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .section-head {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+    .section-en {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 400;
+      color: var(--dark);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .section-ja {
+      font-size: 0.8rem;
+      font-weight: 300;
+      letter-spacing: 0.25em;
+      color: var(--main);
+    }
+    .section-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin: 1.2rem 0;
+    }
+    .section-divider::before,
+    .section-divider::after {
+      content: '';
+      width: 40px; height: 1px;
+      background: var(--main);
+      opacity: 0.5;
+    }
+    .section-divider span {
+      width: 6px; height: 6px;
+      background: var(--main);
+      transform: rotate(45deg);
+      display: block;
+    }
+
+    /* ─── CONCEPT ─── */
+    #concept { background: var(--white); }
+
+    .concept-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .concept-visual {
+      position: relative;
+      height: 480px;
+    }
+    .concept-main-img {
+      position: absolute;
+      top: 0; right: 0;
+      width: 82%; height: 82%;
+      border-radius: 2px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.12);
+    }
+    .concept-sub-img {
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 50%; height: 52%;
+      border-radius: 2px;
+      border: 6px solid white;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+      overflow: hidden;
+    }
+    .concept-main-img img,
+    .concept-sub-img img {
+      transition: transform 0.6s ease;
+    }
+    .concept-visual:hover img {
+      transform: scale(1.04);
+    }
+    .concept-badge {
+      position: absolute;
+      top: 12%; left: -2%;
+      width: 80px; height: 80px;
+      background: var(--main);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      color: white;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.55rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-align: center;
+      line-height: 1.4;
+      box-shadow: 0 4px 16px rgba(86,142,163,0.4);
+      z-index: 2;
+    }
+    .concept-badge strong {
+      font-size: 1.2rem;
+      display: block;
+      letter-spacing: 0;
+    }
+
+    .concept-text .section-head { text-align: left; }
+    .concept-body {
+      font-size: 0.92rem;
+      line-height: 2.2;
+      color: var(--text);
+      margin-bottom: 2rem;
+    }
+    .concept-feature {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .concept-feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.85rem;
+    }
+    .concept-feature-icon {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--light);
+      color: var(--dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* ─── MENU ─── */
+    #menu { background: var(--light-bg); }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+
+    .menu-card {
+      background: white;
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .menu-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+    }
+
+    .menu-img {
+      height: 200px;
+      overflow: hidden;
+      position: relative;
+    }
+    .menu-img-inner {
+      width: 100%;
+      height: 100%;
+      transition: transform 0.5s ease;
+      position: relative;
+    }
+    .menu-card:hover .menu-img-inner { transform: scale(1.1); }
+
+    .menu-info { padding: 1.5rem; }
+    .menu-en {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--dark);
+      margin-bottom: 0.2rem;
+    }
+    .menu-ja {
+      font-size: 0.75rem;
+      color: var(--gray);
+      letter-spacing: 0.1em;
+      margin-bottom: 0.8rem;
+    }
+    .menu-desc {
+      font-size: 0.8rem;
+      color: var(--text);
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+    .menu-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--main);
+    }
+    .menu-link::after {
+      content: '→';
+      transition: transform 0.2s;
+    }
+    .menu-card:hover .menu-link::after { transform: translateX(4px); }
+
+    /* ─── バナーセクション ─── */
+    #banners { padding: 3rem 0; }
+    .banner-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .banner-item {
+      position: relative;
+      height: 260px;
+      border-radius: 4px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .banner-bg {
+      position: absolute;
+      inset: 0;
+      transition: transform 0.5s;
+    }
+    .banner-item:hover .banner-bg { transform: scale(1.05); }
+
+    .banner-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.1) 100%);
+      display: flex;
+      align-items: center;
+      padding: 3rem;
+    }
+    .banner-content { color: white; }
+    .banner-en {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--light);
+      margin-bottom: 0.5rem;
+    }
+    .banner-title {
+      font-size: 1.6rem;
+      font-weight: 500;
+      line-height: 1.4;
+      margin-bottom: 0.8rem;
+      letter-spacing: 0.05em;
+    }
+    .banner-desc {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+    .banner-btn {
+      display: inline-block;
+      padding: 0.6rem 1.5rem;
+      border: 1px solid rgba(255,255,255,0.6);
+      color: white;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      transition: background 0.3s, border-color 0.3s;
+      border-radius: 2px;
+    }
+    .banner-btn:hover { background: rgba(255,255,255,0.2); }
+
+    .banner-icon {
+      display: none;
+    }
+
+    /* ─── GALLERY ─── */
+    #gallery { background: var(--white); }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .gallery-item {
+      aspect-ratio: 1;
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+    }
+    .gallery-bg {
+      width: 100%;
+      height: 100%;
+      transition: transform 0.5s;
+    }
+    .gallery-item:hover .gallery-bg { transform: scale(1.1); }
+
+    .gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(62,102,117,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+    .gallery-overlay-icon {
+      color: white;
+      font-size: 1.5rem;
+    }
+
+    /* ─── NEWS ─── */
+    #news { background: var(--light-bg); }
+
+    .news-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border-top: 1px solid var(--border);
+    }
+    .news-item {
+      display: grid;
+      grid-template-columns: 100px 1fr auto;
+      gap: 2rem;
+      align-items: center;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.2s;
+    }
+    .news-item:hover { background: rgba(201,228,231,0.15); }
+    .news-date {
+      font-family: 'Lato', sans-serif;
+      font-size: 0.8rem;
+      color: var(--gray);
+      letter-spacing: 0.05em;
+    }
+    .news-cat {
+      display: inline-block;
+      padding: 0.15rem 0.7rem;
+      background: var(--main);
+      color: white;
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      border-radius: 2px;
+      margin-bottom: 0.4rem;
+    }
+    .news-cat.green { background: #6A9A60; }
+    .news-cat.orange { background: #C89040; }
+    .news-title-text {
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+    .news-arrow {
+      color: var(--main);
+      font-size: 1.1rem;
+      transition: transform 0.2s;
+    }
+    .news-item:hover .news-arrow { transform: translateX(4px); }
+
+    .news-btn-wrap { text-align: center; margin-top: 2.5rem; }
+    .btn-outline {
+      display: inline-block;
+      padding: 0.85rem 3rem;
+      border: 1px solid var(--main);
+      color: var(--main);
+      font-family: 'Lato', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      transition: background 0.3s, color 0.3s;
+    }
+    .btn-outline:hover { background: var(--main); color: white; }
+
+    /* ─── ACCESS ─── */
+    #access { background: var(--white); }
+
+    .access-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .access-info dt {
+      font-family: 'Lato', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--main);
+      margin-top: 1.8rem;
+      margin-bottom: 0.4rem;
+    }
+    .access-info dt:first-child { margin-top: 0; }
+    .access-info dd {
+      font-size: 0.9rem;
+      line-height: 1.9;
+      color: var(--text);
+    }
+    .access-hours {
+      display: grid;
+      grid-template-columns: 7em 1fr;
+      gap: 0.2rem 0.5rem;
+      font-size: 0.85rem;
+      color: var(--text);
+    }
+    .access-hours .day { color: var(--gray); }
+
+    .map-area {
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+    .map-placeholder {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background: var(--light-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+    /* グリッドパターン */
+    .map-placeholder::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(86,142,163,0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(86,142,163,0.08) 1px, transparent 1px);
+      background-size: 30px 30px;
+    }
+    /* 道路風ライン */
+    .map-placeholder::after {
+      content: '';
+      position: absolute;
+      top: 55%; left: 0; right: 0;
+      height: 12px;
+      background: rgba(86,142,163,0.15);
+    }
+    .map-pin-wrap {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .map-pin-icon {
+      width: 40px; height: 40px;
+      background: var(--main);
+      border-radius: 50% 50% 50% 0;
+      transform: rotate(-45deg);
+      box-shadow: 0 4px 12px rgba(86,142,163,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .map-pin-icon::after {
+      content: '';
+      width: 14px; height: 14px;
+      background: white;
+      border-radius: 50%;
+      transform: rotate(45deg);
+    }
+    .map-label {
+      font-family: 'Lato', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--dark);
+      background: white;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    /* ─── CONTACT ─── */
+    #contact { background: var(--dark); color: white; }
+
+    .contact-inner { text-align: center; }
+    .contact-inner .section-en { color: white; }
+    .contact-inner .section-ja { color: var(--light); }
+    .contact-inner .section-divider::before,
+    .contact-inner .section-divider::after { background: var(--light); }
+    .contact-inner .section-divider span { background: var(--light); }
+
+    .contact-body {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.7);
+      line-height: 2;
+      margin-bottom: 3rem;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      max-width: 800px;
+      margin: 0 auto 3rem;
+    }
+    .contact-card {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 4px;
+      padding: 2rem 1rem;
+      text-align: center;
+      transition: background 0.3s;
+      cursor: pointer;
+    }
+    .contact-card:hover { background: rgba(255,255,255,0.15); }
+    .contact-card-icon { font-size: 1.8rem; margin-bottom: 0.8rem; }
+    .contact-card-en {
+      font-family: 'Lato', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--light);
+      margin-bottom: 0.3rem;
+    }
+    .contact-card-ja {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.8);
+    }
+
+    .contact-tel {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      color: var(--light);
+      margin-bottom: 0.3rem;
+    }
+    .contact-tel-note {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.5);
+    }
+
+    /* ─── フッター ─── */
+    footer {
+      background: #1A2A30;
+      color: rgba(255,255,255,0.4);
+      padding: 2.5rem 0;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: rgba(255,255,255,0.6);
+    }
+    .footer-logo span {
+      font-size: 0.6rem;
+      font-family: 'Lato', sans-serif;
+      letter-spacing: 0.2em;
+      display: block;
+      color: rgba(201,228,231,0.5);
+    }
+    .footer-nav {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    .footer-nav a:hover { color: var(--light); }
+    .footer-copy { font-size: 0.7rem; }
+
+    /* ─── スクロールアニメーション ─── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: none; }
+    .fade-up.d1 { transition-delay: 0.1s; }
+    .fade-up.d2 { transition-delay: 0.2s; }
+    .fade-up.d3 { transition-delay: 0.3s; }
+    .fade-up.d4 { transition-delay: 0.4s; }
+
+    /* ─── スマホ対応 ─── */
+    @media (max-width: 900px) {
+      .global-nav, .nav-reserve { display: none; }
+      .hamburger { display: flex; }
+      .header-inner { height: 60px; }
+      #hero { margin-top: 60px; height: calc(100svh - 60px); }
+
+      .concept-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      .concept-visual { height: 300px; }
+
+      .menu-grid { grid-template-columns: repeat(2, 1fr); }
+
+      .banner-grid { grid-template-columns: 1fr; }
+
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+
+      .news-item { grid-template-columns: 1fr; gap: 0.5rem; }
+      .news-arrow { display: none; }
+
+      .access-inner { grid-template-columns: 1fr; }
+
+      .contact-grid { grid-template-columns: 1fr; max-width: 300px; }
+
+      .footer-inner { flex-direction: column; gap: 1.5rem; text-align: center; }
+      .footer-nav { flex-wrap: wrap; justify-content: center; }
+
+      section { padding: 3.5rem 0; }
+    }
+
+    @media (max-width: 540px) {
+      .menu-grid { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ヘッダー -->
+  <header id="header">
+    <div class="header-inner">
+      <a href="#" class="logo">
+        HANA
+        <span>Cafe &amp; Bar — Kakuozan</span>
+      </a>
+      <nav class="global-nav">
+        <ul>
+          <li><a href="#concept">Concept</a></li>
+          <li><a href="#menu">Menu</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#news">News</a></li>
+          <li><a href="#access">Access</a></li>
+          <li><a href="#contact" class="nav-reserve">予約する</a></li>
+        </ul>
+      </nav>
+      <button class="hamburger" aria-label="メニュー">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ヒーロースライダー -->
+  <section id="hero">
+    <div class="slides">
+      <!-- スライド 1 -->
+      <div class="slide slide-1">
+        <div class="slide-bg"><img src="assets/images/hero-coffee.png" alt="スペシャルティコーヒーのある店内風景"></div>
+        <div class="slide-content">
+          <p class="slide-eyebrow">Welcome to HANA</p>
+          <h2 class="slide-title">
+            こだわりの一杯と<br>
+            <em>くつろぎの空間。</em>
+          </h2>
+          <p class="slide-desc">名古屋・覚王山の路地に佇む、<br>大人のカフェ＆バー。</p>
+          <a href="#menu" class="slide-btn">Menu を見る</a>
+        </div>
+      </div>
+      <!-- スライド 2 -->
+      <div class="slide slide-2">
+        <div class="slide-bg"><img src="assets/images/hero-wine.png" alt="ワインと前菜が並ぶバータイムの風景"></div>
+        <div class="slide-content">
+          <p class="slide-eyebrow">Bar & Wine</p>
+          <h2 class="slide-title">
+            夜は、ワインと<br>
+            <em>語らいの時間を。</em>
+          </h2>
+          <p class="slide-desc">世界各地から厳選したワインと<br>ペアリングを楽しめるバータイム。</p>
+          <a href="#menu" class="slide-btn">Drink Menu</a>
+        </div>
+      </div>
+      <!-- スライド 3 -->
+      <div class="slide slide-3">
+        <div class="slide-bg"><img src="assets/images/hero-farm.png" alt="地元野菜を使った季節料理のイメージ"></div>
+        <div class="slide-content">
+          <p class="slide-eyebrow">Farm to Table</p>
+          <h2 class="slide-title">
+            地元農家から届く<br>
+            <em>新鮮な食材。</em>
+          </h2>
+          <p class="slide-desc">愛知県産の野菜・果物を中心に、<br>季節のメニューをご提供します。</p>
+          <a href="#concept" class="slide-btn">Concept を見る</a>
+        </div>
+      </div>
+    </div>
+    <div class="slide-dots">
+      <div class="slide-dot active" data-idx="0"></div>
+      <div class="slide-dot" data-idx="1"></div>
+      <div class="slide-dot" data-idx="2"></div>
+    </div>
+  </section>
+
+  <!-- コンセプト -->
+  <section id="concept">
+    <div class="container">
+      <div class="concept-inner">
+        <div class="concept-visual fade-up">
+          <div class="concept-main-img"><img src="assets/images/concept-interior.png" alt="Cafe &amp; Bar HANA の店内イメージ"></div>
+          <div class="concept-sub-img"><img src="assets/images/menu-lunch.png" alt="地元野菜を使ったランチプレート"></div>
+          <div class="concept-badge">
+            <strong>2018</strong>
+            OPEN
+          </div>
+        </div>
+        <div class="concept-text fade-up d2">
+          <div class="section-head" style="text-align:left;">
+            <p class="section-en">Concept</p>
+            <p class="section-ja">コンセプト</p>
+            <div class="section-divider" style="justify-content:flex-start; margin-left:0;">
+              <span></span>
+            </div>
+          </div>
+          <p class="concept-body">
+            HANAは「花」—— 咲き、香り、人を引き寄せる。<br>
+            そんな存在でありたいと、このカフェを開きました。<br>
+            <br>
+            こだわりの豆を使ったスペシャルティコーヒーから、<br>
+            地元農家と直接契約した旬の食材を使った料理まで。<br>
+            ここでしか出会えない、日々の「小さな豊かさ」を届けます。
+          </p>
+          <div class="concept-feature">
+            <div class="concept-feature-item">
+              <div class="concept-feature-icon">☕</div>
+              <div>スペシャルティコーヒーを毎朝焙煎。香りから違います。</div>
+            </div>
+            <div class="concept-feature-item">
+              <div class="concept-feature-icon">🌿</div>
+              <div>愛知県産野菜を中心にした、体に優しいランチメニュー。</div>
+            </div>
+            <div class="concept-feature-item">
+              <div class="concept-feature-icon">🍷</div>
+              <div>夜はソムリエ厳選のナチュラルワインでゆっくりと。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- メニュー -->
+  <section id="menu">
+    <div class="container">
+      <div class="section-head fade-up">
+        <p class="section-en">Menu</p>
+        <p class="section-ja">メニュー</p>
+        <div class="section-divider"><span></span></div>
+      </div>
+      <div class="menu-grid">
+        <div class="menu-card fade-up">
+          <div class="menu-img"><div class="menu-img-inner"><img src="assets/images/menu-lunch.png" alt="ランチメニューのイメージ"></div></div>
+          <div class="menu-info">
+            <p class="menu-en">Lunch</p>
+            <p class="menu-ja">ランチメニュー</p>
+            <p class="menu-desc">日替わりスープ付き。地元野菜を使ったプレートランチは毎日替わります。</p>
+            <a href="menu/lunch.html" class="menu-link">詳しく見る</a>
+          </div>
+        </div>
+        <div class="menu-card fade-up d1">
+          <div class="menu-img"><div class="menu-img-inner"><img src="assets/images/menu-food.png" alt="フードメニューのイメージ"></div></div>
+          <div class="menu-info">
+            <p class="menu-en">Food</p>
+            <p class="menu-ja">フードメニュー</p>
+            <p class="menu-desc">アラカルトからシェアプレートまで。ディナータイムのお供に。</p>
+            <a href="menu/food.html" class="menu-link">詳しく見る</a>
+          </div>
+        </div>
+        <div class="menu-card fade-up d2">
+          <div class="menu-img"><div class="menu-img-inner"><img src="assets/images/menu-drink.png" alt="ドリンクメニューのイメージ"></div></div>
+          <div class="menu-info">
+            <p class="menu-en">Drink</p>
+            <p class="menu-ja">ドリンクメニュー</p>
+            <p class="menu-desc">スペシャルティコーヒー、厳選ワイン、クラフトビール。</p>
+            <a href="menu/drink.html" class="menu-link">詳しく見る</a>
+          </div>
+        </div>
+        <div class="menu-card fade-up d3">
+          <div class="menu-img"><div class="menu-img-inner"><img src="assets/images/menu-dessert.png" alt="デザートメニューのイメージ"></div></div>
+          <div class="menu-info">
+            <p class="menu-en">Dessert</p>
+            <p class="menu-ja">デザートメニュー</p>
+            <p class="menu-desc">パティシエ手作りのケーキとコーヒーのペアリングが人気。</p>
+            <a href="menu/dessert.html" class="menu-link">詳しく見る</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- バナー（パーティー・テイクアウト） -->
+  <section id="banners" style="background: var(--light-bg);">
+    <div class="container">
+      <div class="banner-grid">
+        <div class="banner-item fade-up">
+          <div class="banner-bg"><img src="assets/images/banner-party.png" alt="貸切パーティープランのイメージ"></div>
+          <div class="banner-overlay">
+            <div class="banner-content">
+              <p class="banner-en">Private Party</p>
+              <p class="banner-title">貸切・パーティー<br>プラン</p>
+              <p class="banner-desc">誕生日・歓送迎会・女子会など<br>2名〜30名まで対応。</p>
+              <a href="#contact" class="banner-btn">詳細・お問い合わせ</a>
+            </div>
+          </div>
+        </div>
+        <div class="banner-item fade-up d2">
+          <div class="banner-bg"><img src="assets/images/banner-takeout.png" alt="テイクアウトとコーヒー豆販売のイメージ"></div>
+          <div class="banner-overlay">
+            <div class="banner-content">
+              <p class="banner-en">Takeout</p>
+              <p class="banner-title">テイクアウト・<br>コーヒー豆販売</p>
+              <p class="banner-desc">焙煎豆の量り売りも実施中。<br>ギフトラッピングも承ります。</p>
+              <a href="#" class="banner-btn">テイクアウトメニュー</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ギャラリー -->
+  <section id="gallery">
+    <div class="container">
+      <div class="section-head fade-up">
+        <p class="section-en">Gallery</p>
+        <p class="section-ja">ギャラリー</p>
+        <div class="section-divider"><span></span></div>
+      </div>
+      <div class="gallery-grid fade-up">
+          <div class="gallery-item">
+            <div class="gallery-bg"><img src="assets/images/gallery-interior.jpg" alt="店内の空間"></div>
+            <div class="gallery-overlay"><span class="gallery-overlay-icon">🔍</span></div>
+          </div>
+          <div class="gallery-item">
+            <div class="gallery-bg"><img src="assets/images/gallery-bar.jpg" alt="バーカウンター夜景"></div>
+            <div class="gallery-overlay"><span class="gallery-overlay-icon">🔍</span></div>
+          </div>
+          <div class="gallery-item">
+            <div class="gallery-bg"><img src="assets/images/gallery-coffee.jpg" alt="コーヒー抽出"></div>
+            <div class="gallery-overlay"><span class="gallery-overlay-icon">🔍</span></div>
+          </div>
+          <div class="gallery-item">
+            <div class="gallery-bg"><img src="assets/images/gallery-salad.jpg" alt="サラダボウル"></div>
+            <div class="gallery-overlay"><span class="gallery-overlay-icon">🔍</span></div>
+          </div>
+          <div class="gallery-item">
+            <div class="gallery-bg"><img src="assets/images/gallery-drinks.jpg" alt="ドリンクセレクション"></div>
+            <div class="gallery-overlay"><span class="gallery-overlay-icon">🔍</span></div>
+          </div>
+          <div class="gallery-item">
+            <div class="gallery-bg"><img src="assets/images/gallery-pasta.jpg" alt="キノコパスタ"></div>
+            <div class="gallery-overlay"><span class="gallery-overlay-icon">🔍</span></div>
+          </div>
+          <div class="gallery-item">
+            <div class="gallery-bg"><img src="assets/images/gallery-tart.jpg" alt="イチゴタルト"></div>
+            <div class="gallery-overlay"><span class="gallery-overlay-icon">🔍</span></div>
+          </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ニュース -->
+  <section id="news">
+    <div class="container">
+      <div class="section-head fade-up">
+        <p class="section-en">News</p>
+        <p class="section-ja">お知らせ</p>
+        <div class="section-divider"><span></span></div>
+      </div>
+      <div class="news-list fade-up">
+        <a href="news.html#gw-hours" class="news-item">
+          <p class="news-date">2026.04.15</p>
+          <div>
+            <span class="news-cat">お知らせ</span>
+            <p class="news-title-text">GWの営業時間について（4月29日〜5月6日）</p>
+          </div>
+          <span class="news-arrow">→</span>
+        </a>
+        <a href="news.html#spring-menu" class="news-item">
+          <p class="news-date">2026.04.01</p>
+          <div>
+            <span class="news-cat green">メニュー</span>
+            <p class="news-title-text">春の新メニューが登場しました。桜エビのパスタほか4品。</p>
+          </div>
+          <span class="news-arrow">→</span>
+        </a>
+        <a href="news.html#wine-night" class="news-item">
+          <p class="news-date">2026.03.20</p>
+          <div>
+            <span class="news-cat orange">イベント</span>
+            <p class="news-title-text">【3月30日】ナチュラルワインの夕べ Vol.5 開催決定</p>
+          </div>
+          <span class="news-arrow">→</span>
+        </a>
+        <a href="news.html#online-store" class="news-item">
+          <p class="news-date">2026.03.01</p>
+          <div>
+            <span class="news-cat">お知らせ</span>
+            <p class="news-title-text">コーヒー豆のオンライン販売を開始しました。</p>
+          </div>
+          <span class="news-arrow">→</span>
+        </a>
+        <a href="news.html#valentine-dessert" class="news-item">
+          <p class="news-date">2026.02.14</p>
+          <div>
+            <span class="news-cat orange">イベント</span>
+            <p class="news-title-text">バレンタイン限定スイーツプレートが好評のうちに終了しました。</p>
+          </div>
+          <span class="news-arrow">→</span>
+        </a>
+      </div>
+      <div class="news-btn-wrap fade-up">
+        <a href="news.html" class="btn-outline">More News</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- アクセス -->
+  <section id="access">
+    <div class="container">
+      <div class="section-head fade-up">
+        <p class="section-en">Access</p>
+        <p class="section-ja">アクセス・営業時間</p>
+        <div class="section-divider"><span></span></div>
+      </div>
+      <div class="access-inner">
+        <div class="fade-up">
+          <dl class="access-info">
+            <dt>店名</dt>
+            <dd>Cafe &amp; Bar HANA（カフェ アンド バー ハナ）</dd>
+            <dt>住所</dt>
+            <dd>〒464-0821<br>愛知県名古屋市千種区末盛通○-○<br>○○ビル 1F</dd>
+            <dt>アクセス</dt>
+            <dd>地下鉄東山線「覚王山駅」1番出口より徒歩2分</dd>
+            <dt>電話番号</dt>
+            <dd>052-○○○-○○○○</dd>
+            <dt>営業時間</dt>
+            <dd>
+              <div class="access-hours">
+                <span class="day">月〜金</span><span>11:00 〜 23:00</span>
+                <span class="day">土・日・祝</span><span>10:00 〜 22:00</span>
+              </div>
+            </dd>
+            <dt>定休日</dt>
+            <dd>毎週火曜日</dd>
+            <dt>駐車場</dt>
+            <dd>なし（近隣のコインパーキングをご利用ください）</dd>
+          </dl>
+        </div>
+        <div class="map-area fade-up d2">
+          <div class="map-placeholder">
+            <div class="map-pin-wrap">
+              <div class="map-pin-icon"></div>
+              <p class="map-label">Cafe &amp; Bar HANA</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- お問い合わせ -->
+  <section id="contact">
+    <div class="container">
+      <div class="contact-inner">
+        <div class="section-head fade-up">
+          <p class="section-en">Contact</p>
+          <p class="section-ja">ご予約・お問い合わせ</p>
+          <div class="section-divider"><span></span></div>
+        </div>
+        <p class="contact-body fade-up">
+          ご予約はお電話またはWeb予約フォームにて承ります。<br>
+          貸切・パーティープランのご相談もお気軽にどうぞ。
+        </p>
+        <div class="contact-grid fade-up">
+          <div class="contact-card">
+            <div class="contact-card-icon">📋</div>
+            <p class="contact-card-en">Web Reserve</p>
+            <p class="contact-card-ja">Web予約フォーム</p>
+          </div>
+          <div class="contact-card">
+            <div class="contact-card-icon">💬</div>
+            <p class="contact-card-en">LINE</p>
+            <p class="contact-card-ja">LINEで相談する</p>
+          </div>
+          <div class="contact-card">
+            <div class="contact-card-icon">✉️</div>
+            <p class="contact-card-en">Email</p>
+            <p class="contact-card-ja">メールを送る</p>
+          </div>
+        </div>
+        <p class="contact-tel fade-up">052-○○○-○○○○</p>
+        <p class="contact-tel-note">受付時間 11:00〜22:00（火曜定休）</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- フッター -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">
+        HANA
+        <span>Cafe &amp; Bar — Kakuozan, Nagoya</span>
+      </div>
+      <ul class="footer-nav">
+        <li><a href="#concept">Concept</a></li>
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#access">Access</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <p class="footer-copy">© 2026 Cafe &amp; Bar HANA. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // ヘッダースクロール
+    window.addEventListener('scroll', () => {
+      document.getElementById('header').classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    // スクロールアニメーション
+    const fadeEls = document.querySelectorAll('.fade-up');
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    fadeEls.forEach(el => io.observe(el));
+
+    // スライドドット連動
+    const dots = document.querySelectorAll('.slide-dot');
+    // CSSアニメーション 4秒/スライド × 3 = 12s
+    let idx = 0;
+    setInterval(() => {
+      dots[idx].classList.remove('active');
+      idx = (idx + 1) % 3;
+      dots[idx].classList.add('active');
+    }, 4000);
+
+    // ハンバーガー（簡易）
+    document.querySelector('.hamburger').addEventListener('click', () => {
+      const nav = document.querySelector('.global-nav');
+      if (!nav) return;
+      const isOpen = nav.style.display === 'block';
+      nav.style.display = isOpen ? '' : 'block';
+      if (!isOpen) {
+        nav.style.position = 'absolute';
+        nav.style.top = '60px';
+        nav.style.left = '0'; nav.style.right = '0';
+        nav.style.background = 'white';
+        nav.style.padding = '1rem 2rem';
+        nav.style.boxShadow = '0 8px 24px rgba(0,0,0,0.1)';
+        nav.querySelector('ul').style.flexDirection = 'column';
+        nav.querySelector('ul').style.gap = '0.5rem';
+      }
+    });
+  </script>
+</body>
+</html>

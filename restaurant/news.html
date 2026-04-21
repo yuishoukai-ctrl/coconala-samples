@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>News | Cafe &amp; Bar HANA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Lato:wght@300;400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --main: #568EA3;
+      --light: #C9E4E7;
+      --dark: #3E6675;
+      --text: #444444;
+      --light-bg: #F5FAFB;
+      --white: #ffffff;
+      --gray: #777777;
+      --border: #DDDDDD;
+      --shadow: 0 20px 50px rgba(34, 58, 66, 0.12);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, #FCFEFE 0%, #F6FAFB 100%);
+      line-height: 1.8;
+    }
+
+    img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    a { text-decoration: none; color: inherit; }
+
+    .container {
+      width: min(1180px, calc(100% - 3rem));
+      margin: 0 auto;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background: rgba(255,255,255,0.94);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(86, 142, 163, 0.15);
+    }
+
+    .header-inner {
+      min-height: 74px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--dark);
+    }
+
+    .logo span {
+      display: block;
+      margin-top: -2px;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      color: var(--main);
+      text-transform: uppercase;
+    }
+
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .header-nav a {
+      font-family: 'Lato', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text);
+      padding: 0.65rem 1rem;
+      border-radius: 999px;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .header-nav a:hover {
+      background: rgba(86, 142, 163, 0.12);
+      color: var(--dark);
+    }
+
+    .header-nav .reserve-link {
+      background: var(--main);
+      color: var(--white);
+    }
+
+    .header-nav .reserve-link:hover {
+      background: var(--dark);
+      color: var(--white);
+    }
+
+    .news-hero {
+      padding: 2rem 0 4.5rem;
+    }
+
+    .hero-panel {
+      position: relative;
+      min-height: 560px;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      background: #e6f0f3;
+    }
+
+    .hero-media {
+      position: absolute;
+      inset: 0;
+    }
+
+    .hero-media::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(24, 36, 43, 0.72) 0%, rgba(24, 36, 43, 0.45) 35%, rgba(24, 36, 43, 0.18) 68%, rgba(24, 36, 43, 0.1) 100%);
+    }
+
+    .hero-copy {
+      position: relative;
+      z-index: 1;
+      max-width: 560px;
+      padding: 5.5rem 4rem;
+      color: var(--white);
+    }
+
+    .eyebrow {
+      font-family: 'Lato', sans-serif;
+      font-size: 0.76rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 1.2rem;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 6vw, 4.4rem);
+      line-height: 1.12;
+      margin-bottom: 1.4rem;
+      text-shadow: 0 14px 30px rgba(0,0,0,0.22);
+    }
+
+    .hero-desc {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.86);
+      max-width: 34rem;
+      margin-bottom: 2rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 0.9rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.9rem 1.7rem;
+      border-radius: 999px;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      transition: transform 0.2s, background 0.2s, color 0.2s, border-color 0.2s;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+
+    .btn-primary {
+      background: var(--white);
+      color: var(--dark);
+    }
+
+    .btn-outline {
+      border: 1px solid rgba(255,255,255,0.55);
+      color: var(--white);
+      background: rgba(255,255,255,0.06);
+    }
+
+    .section {
+      padding: 0 0 4.5rem;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      color: var(--dark);
+      line-height: 1.1;
+    }
+
+    .section-sub {
+      font-size: 0.85rem;
+      color: var(--gray);
+      max-width: 34rem;
+    }
+
+    .lead-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 1.4rem;
+      margin-bottom: 1.6rem;
+    }
+
+    .feature-card,
+    .mini-card,
+    .post-card,
+    .story,
+    .cta-panel {
+      background: var(--white);
+      border: 1px solid rgba(86, 142, 163, 0.14);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(63, 98, 115, 0.08);
+    }
+
+    .feature-card {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      min-height: 360px;
+    }
+
+    .feature-copy {
+      padding: 2.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .kicker,
+    .news-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 0.8rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      width: fit-content;
+    }
+
+    .kicker,
+    .news-pill.notice {
+      background: rgba(86, 142, 163, 0.12);
+      color: var(--dark);
+    }
+
+    .news-pill.menu {
+      background: rgba(106, 154, 96, 0.13);
+      color: #5b7b4f;
+    }
+
+    .news-pill.event {
+      background: rgba(200, 144, 64, 0.15);
+      color: #9e6b2d;
+    }
+
+    .post-date {
+      font-family: 'Lato', sans-serif;
+      font-size: 0.82rem;
+      color: var(--gray);
+      letter-spacing: 0.08em;
+    }
+
+    .feature-title {
+      font-size: clamp(1.5rem, 2.6vw, 2.4rem);
+      line-height: 1.35;
+      color: #233842;
+    }
+
+    .feature-text,
+    .story-body p,
+    .mini-card p,
+    .post-card p {
+      font-size: 0.92rem;
+      color: #5b6468;
+    }
+
+    .feature-link,
+    .post-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      margin-top: auto;
+      color: var(--main);
+      font-family: 'Lato', sans-serif;
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .side-stack {
+      display: grid;
+      gap: 1.4rem;
+    }
+
+    .mini-card {
+      display: grid;
+      grid-template-columns: 136px 1fr;
+      min-height: 172px;
+    }
+
+    .mini-copy {
+      padding: 1.25rem 1.3rem 1.2rem;
+      display: grid;
+      gap: 0.7rem;
+    }
+
+    .archive-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.4rem;
+    }
+
+    .post-card {
+      display: grid;
+      grid-template-rows: 214px auto;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+
+    .post-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 36px rgba(63, 98, 115, 0.12);
+    }
+
+    .post-copy {
+      padding: 1.4rem;
+      display: grid;
+      gap: 0.85rem;
+    }
+
+    .post-title,
+    .story-title {
+      color: #243840;
+      line-height: 1.45;
+    }
+
+    .post-title {
+      font-size: 1.08rem;
+    }
+
+    .stories {
+      display: grid;
+      gap: 2rem;
+    }
+
+    .story {
+      scroll-margin-top: 100px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+    }
+
+    .story.reverse {
+      grid-template-columns: 0.9fr 1.1fr;
+    }
+
+    .story.reverse .story-copy {
+      order: 1;
+    }
+
+    .story.reverse .story-media {
+      order: 2;
+    }
+
+    .story-media {
+      min-height: 360px;
+      background: #edf4f6;
+    }
+
+    .story-copy {
+      padding: 2.25rem;
+      display: grid;
+      gap: 1rem;
+      align-content: start;
+    }
+
+    .story-copy h2 {
+      font-size: clamp(1.5rem, 2.5vw, 2.1rem);
+    }
+
+    .story-lead {
+      padding: 1rem 1.1rem;
+      background: rgba(86, 142, 163, 0.08);
+      border-left: 3px solid var(--main);
+      border-radius: 10px;
+      color: #46616b;
+      font-size: 0.9rem;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.8rem;
+      margin-top: 0.4rem;
+    }
+
+    .info-box {
+      padding: 1rem;
+      border-radius: 16px;
+      background: var(--light-bg);
+      border: 1px solid rgba(86, 142, 163, 0.1);
+    }
+
+    .info-box h3 {
+      font-size: 0.75rem;
+      font-family: 'Lato', sans-serif;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--main);
+      margin-bottom: 0.35rem;
+    }
+
+    .info-box p {
+      font-size: 0.88rem;
+      color: #556468;
+    }
+
+    .cta-panel {
+      padding: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      margin-bottom: 4.5rem;
+      background:
+        radial-gradient(circle at top right, rgba(201, 228, 231, 0.7), rgba(201, 228, 231, 0) 35%),
+        linear-gradient(135deg, #ffffff 0%, #f7fbfc 100%);
+    }
+
+    .cta-panel h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 3vw, 2.5rem);
+      color: var(--dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .cta-panel p {
+      font-size: 0.92rem;
+      color: #56666d;
+      max-width: 40rem;
+    }
+
+    .cta-actions {
+      display: flex;
+      gap: 0.85rem;
+      flex-wrap: wrap;
+    }
+
+    .cta-actions .btn-primary {
+      background: var(--main);
+      color: var(--white);
+    }
+
+    .cta-actions .btn-outline-dark {
+      border: 1px solid rgba(62, 102, 117, 0.22);
+      color: var(--dark);
+      background: var(--white);
+    }
+
+    .site-footer {
+      padding: 2rem 0 2.6rem;
+      border-top: 1px solid rgba(86, 142, 163, 0.15);
+      background: rgba(255,255,255,0.7);
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-copy {
+      font-size: 0.78rem;
+      color: var(--gray);
+    }
+
+    @media (max-width: 1040px) {
+      .lead-grid,
+      .feature-card,
+      .story,
+      .story.reverse {
+        grid-template-columns: 1fr;
+      }
+
+      .archive-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .story.reverse .story-copy,
+      .story.reverse .story-media {
+        order: initial;
+      }
+
+      .hero-copy {
+        padding: 4rem 2.5rem;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .container {
+        width: min(100% - 1.4rem, 1000px);
+      }
+
+      .header-inner,
+      .section-head,
+      .cta-panel,
+      .footer-inner {
+        display: block;
+      }
+
+      .header-inner {
+        padding: 1rem 0;
+      }
+
+      .header-nav {
+        margin-top: 1rem;
+        justify-content: flex-start;
+      }
+
+      .hero-panel {
+        min-height: 520px;
+        border-radius: 22px;
+      }
+
+      .hero-copy {
+        padding: 3.4rem 1.5rem;
+      }
+
+      .hero-actions,
+      .cta-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .mini-card {
+        grid-template-columns: 1fr;
+      }
+
+      .archive-grid,
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .story-copy,
+      .feature-copy {
+        padding: 1.5rem;
+      }
+
+      .story-media,
+      .feature-card .post-media {
+        min-height: 240px;
+      }
+
+      .cta-panel {
+        padding: 1.5rem;
+      }
+
+      .section-title {
+        margin-bottom: 0.6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        HANA
+        <span>Cafe &amp; Bar - Kakuozan</span>
+      </a>
+      <nav class="header-nav">
+        <a href="index.html">Top</a>
+        <a href="index.html#menu">Menu</a>
+        <a href="index.html#gallery">Gallery</a>
+        <a href="index.html#access">Access</a>
+        <a href="index.html#contact" class="reserve-link">Reserve</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="news-hero">
+      <div class="container">
+        <div class="hero-panel">
+          <div class="hero-media">
+            <img src="assets/images/news-hero.png" alt="Cafe &amp; Bar HANA のお知らせページメインビジュアル" />
+          </div>
+          <div class="hero-copy">
+            <p class="eyebrow">News &amp; Journal</p>
+            <h1 class="hero-title">季節の知らせと、<br>お店の日々を。</h1>
+            <p class="hero-desc">営業時間のご案内から新メニュー、イベントレポートまで。Cafe &amp; Bar HANA の今を、ゆっくり読める形でまとめました。</p>
+            <div class="hero-actions">
+              <a href="#latest" class="btn btn-primary">Latest Topics</a>
+              <a href="#stories" class="btn btn-outline">Read Stories</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="latest">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">Latest Highlights</h2>
+            <p class="section-sub">直近のお知らせを、読みやすいダイジェストでまとめています。トップページから気になった項目はここからすぐ本文へ移動できます。</p>
+          </div>
+        </div>
+
+        <div class="lead-grid">
+          <article class="feature-card">
+            <div class="post-media">
+              <img src="assets/images/news-spring-menu.png" alt="春メニューの桜エビパスタ" />
+            </div>
+            <div class="feature-copy">
+              <span class="news-pill menu">Menu Update</span>
+              <p class="post-date">2026.04.01</p>
+              <h3 class="feature-title">春の新メニューが登場しました。桜エビのパスタほか4品。</h3>
+              <p class="feature-text">窓辺のやわらかな光に似合う春メニューをスタート。旬の桜エビやアスパラ、柑橘の香りを使った軽やかな一皿を中心に、ランチもディナーも楽しめる構成になっています。</p>
+              <a href="#spring-menu" class="feature-link">Read Article →</a>
+            </div>
+          </article>
+
+          <div class="side-stack">
+            <article class="mini-card">
+              <div class="post-media">
+                <img src="assets/images/concept-interior.png" alt="店内のやわらかな光景" />
+              </div>
+              <div class="mini-copy">
+                <span class="news-pill notice">Notice</span>
+                <p class="post-date">2026.04.15</p>
+                <h3 class="post-title">GWの営業時間について（4月29日〜5月6日）</h3>
+                <p>祝日営業にあわせて朝のオープン時間を少し早め、夜のご利用もしやすいスケジュールにしました。</p>
+                <a href="#gw-hours" class="post-link">Details →</a>
+              </div>
+            </article>
+
+            <article class="mini-card">
+              <div class="post-media">
+                <img src="assets/images/news-wine-event.png" alt="ナチュラルワインイベントの雰囲気" />
+              </div>
+              <div class="mini-copy">
+                <span class="news-pill event">Event</span>
+                <p class="post-date">2026.03.20</p>
+                <h3 class="post-title">ナチュラルワインの夕べ Vol.5 を開催します。</h3>
+                <p>春の食材と合わせるグラスワインを少量ずつ楽しめる、定員制の人気イベントです。</p>
+                <a href="#wine-night" class="post-link">Details →</a>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="archive-grid">
+          <a href="#gw-hours" class="post-card">
+            <div class="post-media">
+              <img src="assets/images/hero-coffee.png" alt="営業時間案内の記事イメージ" />
+            </div>
+            <div class="post-copy">
+              <span class="news-pill notice">Notice</span>
+              <p class="post-date">2026.04.15</p>
+              <h3 class="post-title">GW期間の営業時間をお知らせします</h3>
+              <p>4月29日から5月6日までの営業スケジュールと、混雑しやすい時間帯の目安をまとめました。</p>
+            </div>
+          </a>
+
+          <a href="#spring-menu" class="post-card">
+            <div class="post-media">
+              <img src="assets/images/news-spring-menu.png" alt="春の新メニュー記事イメージ" />
+            </div>
+            <div class="post-copy">
+              <span class="news-pill menu">Menu Update</span>
+              <p class="post-date">2026.04.01</p>
+              <h3 class="post-title">春メニューのラインナップをご紹介</h3>
+              <p>桜エビのパスタ、春野菜のプレート、柑橘デザートなど、季節限定のおすすめを掲載しています。</p>
+            </div>
+          </a>
+
+          <a href="#wine-night" class="post-card">
+            <div class="post-media">
+              <img src="assets/images/news-wine-event.png" alt="ワインイベント記事イメージ" />
+            </div>
+            <div class="post-copy">
+              <span class="news-pill event">Event</span>
+              <p class="post-date">2026.03.20</p>
+              <h3 class="post-title">ナチュラルワインの夕べ Vol.5 開催決定</h3>
+              <p>軽やかな春の料理と自然派ワインのペアリングを楽しむ夜。予約方法もこちらから確認できます。</p>
+            </div>
+          </a>
+
+          <a href="#online-store" class="post-card">
+            <div class="post-media">
+              <img src="assets/images/banner-takeout.png" alt="オンライン販売開始の記事イメージ" />
+            </div>
+            <div class="post-copy">
+              <span class="news-pill notice">Shop News</span>
+              <p class="post-date">2026.03.01</p>
+              <h3 class="post-title">コーヒー豆のオンライン販売を開始しました</h3>
+              <p>店頭で人気の焙煎豆を、ギフト用と自宅用の両方でお届けできるようになりました。</p>
+            </div>
+          </a>
+
+          <a href="#valentine-dessert" class="post-card">
+            <div class="post-media">
+              <img src="assets/images/menu-dessert.png" alt="バレンタイン限定スイーツ記事イメージ" />
+            </div>
+            <div class="post-copy">
+              <span class="news-pill event">Event Report</span>
+              <p class="post-date">2026.02.14</p>
+              <h3 class="post-title">限定スイーツプレートが好評のうちに終了しました</h3>
+              <p>バレンタイン期間の特別デザートをご利用いただいた皆さまへのお礼と、次回企画の予告です。</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="stories">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">Stories</h2>
+            <p class="section-sub">各お知らせの本文と補足情報です。営業時間や予約方法など、来店前に気になる実務情報もひと目で分かるように整理しました。</p>
+          </div>
+        </div>
+
+        <div class="stories">
+          <article class="story" id="gw-hours">
+            <div class="story-media">
+              <img src="assets/images/concept-interior.png" alt="GW営業時間案内のイメージ" />
+            </div>
+            <div class="story-copy">
+              <span class="news-pill notice">Notice</span>
+              <p class="post-date">2026.04.15</p>
+              <h2 class="story-title">GWの営業時間について（4月29日〜5月6日）</h2>
+              <p class="story-lead">連休中はご家族や遠方のお客さまにも立ち寄りやすいよう、土日祝スケジュールをベースに朝の営業を拡大します。</p>
+              <div class="story-body">
+                <p>4月29日、水曜日から5月6日、水曜日までの期間は、全日 10:00 オープンとなります。ランチは 11:00 から、カフェ利用はオープン直後からご案内いたします。</p>
+                <p>混雑が見込まれるのは 11:30 から 14:00、18:30 から 20:30 の時間帯です。ゆっくり過ごされたい方には、朝の時間帯や 15:00 前後のご来店がおすすめです。</p>
+                <p>期間中も火曜日の定休日は設けず、連休最終日の 5月6日、水曜日まで通常通り営業いたします。7日、木曜日は振替休業となります。</p>
+              </div>
+              <div class="info-grid">
+                <div class="info-box">
+                  <h3>Open Hours</h3>
+                  <p>4月29日から5月6日まで 10:00 - 22:00</p>
+                </div>
+                <div class="info-box">
+                  <h3>Reservation</h3>
+                  <p>ランチ帯は事前予約優先。お電話または Web 予約フォームをご利用ください。</p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="story reverse" id="spring-menu">
+            <div class="story-media">
+              <img src="assets/images/news-spring-menu.png" alt="春メニューの桜エビパスタ" />
+            </div>
+            <div class="story-copy">
+              <span class="news-pill menu">Menu Update</span>
+              <p class="post-date">2026.04.01</p>
+              <h2 class="story-title">春の新メニューが登場しました。桜エビのパスタほか4品。</h2>
+              <p class="story-lead">旬の香りと軽やかな余韻をテーマに、春限定メニューをスタートしました。昼も夜も楽しめるよう、彩りと食べやすさのバランスを整えています。</p>
+              <div class="story-body">
+                <p>新登場の主役は、駿河湾産の桜エビとアスパラを合わせたオイルベースのパスタです。やさしい塩味と柑橘の香りで、春らしい軽さに仕上げました。</p>
+                <p>ほかにも、春野菜のローストプレート、レモンとハーブのチキン、いちごとマスカルポーネのデザートを用意しています。ランチプレートにも一部の春メニューが加わります。</p>
+                <p>数量限定の品もあるため、ディナータイムでご希望の方は事前のお取り置きがおすすめです。店頭でのご案内に加えて、今後は SNS でも日替わり情報を発信予定です。</p>
+              </div>
+              <div class="info-grid">
+                <div class="info-box">
+                  <h3>Available</h3>
+                  <p>4月1日、水曜日から 5月下旬ごろまでの予定です。</p>
+                </div>
+                <div class="info-box">
+                  <h3>Popular Item</h3>
+                  <p>桜エビと春野菜のパスタはディナータイム限定での提供です。</p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="story" id="wine-night">
+            <div class="story-media">
+              <img src="assets/images/news-wine-event.png" alt="ナチュラルワインの夕べイベントイメージ" />
+            </div>
+            <div class="story-copy">
+              <span class="news-pill event">Event</span>
+              <p class="post-date">2026.03.20</p>
+              <h2 class="story-title">【3月30日】ナチュラルワインの夕べ Vol.5 開催決定</h2>
+              <p class="story-lead">毎回ご好評をいただいているワインイベントの第5回です。今回は春に向けた白とロゼを中心に、軽やかな赤も交えて少量ずつお楽しみいただきます。</p>
+              <div class="story-body">
+                <p>開催日は 3月30日、月曜日の 19:00 スタート。着席形式で、全6種のワインとペアリングプレートをご用意します。ナチュラルワイン初心者の方にも飲みやすい構成にしました。</p>
+                <p>当日はソムリエがそれぞれのワインの産地や造り手の話を簡単にご紹介します。堅苦しい会ではなく、食事と会話を楽しみながら気軽に過ごしていただける内容です。</p>
+                <p>定員は 18 名で、先着順の受付となります。アレルギーや苦手食材がある方はご予約時にお知らせください。</p>
+              </div>
+              <div class="info-grid">
+                <div class="info-box">
+                  <h3>Date</h3>
+                  <p>2026年3月30日、月曜日 19:00 - 21:00</p>
+                </div>
+                <div class="info-box">
+                  <h3>Fee</h3>
+                  <p>おひとり 6,800 円。ワイン 6 種とペアリングプレート込み。</p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="story reverse" id="online-store">
+            <div class="story-media">
+              <img src="assets/images/banner-takeout.png" alt="オンライン販売開始のお知らせイメージ" />
+            </div>
+            <div class="story-copy">
+              <span class="news-pill notice">Shop News</span>
+              <p class="post-date">2026.03.01</p>
+              <h2 class="story-title">コーヒー豆のオンライン販売を開始しました。</h2>
+              <p class="story-lead">ご自宅でも HANA の味を楽しんでいただけるよう、焙煎豆のオンライン販売をスタートしました。店頭で人気のブレンドを中心に、ギフト対応も可能です。</p>
+              <div class="story-body">
+                <p>オンラインでは、定番の HANA ブレンド、中深煎りの Kakuozan ブレンド、季節のシングルオリジンを 100g 単位でご注文いただけます。豆のまま、またはお好みの挽き目にも対応します。</p>
+                <p>ギフトボックスは 2 袋セットと 3 袋セットの 2 種類をご用意しました。手土産やお祝い返しとしても使いやすい、落ち着いたパッケージでお届けします。</p>
+                <p>今後は焼き菓子とのセット販売や、月替わりの定期便も検討しています。店舗受け取りをご希望の方は、注文時の備考欄にその旨をご記入ください。</p>
+              </div>
+              <div class="info-grid">
+                <div class="info-box">
+                  <h3>Shipping</h3>
+                  <p>ご注文確定から 3 営業日以内に発送します。</p>
+                </div>
+                <div class="info-box">
+                  <h3>Gift Wrap</h3>
+                  <p>無料の簡易ラッピングと、有料のギフトボックスに対応しています。</p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="story" id="valentine-dessert">
+            <div class="story-media">
+              <img src="assets/images/menu-dessert.png" alt="バレンタイン限定スイーツプレートのイメージ" />
+            </div>
+            <div class="story-copy">
+              <span class="news-pill event">Event Report</span>
+              <p class="post-date">2026.02.14</p>
+              <h2 class="story-title">バレンタイン限定スイーツプレートが好評のうちに終了しました。</h2>
+              <p class="story-lead">2月限定でご用意したスイーツプレートは、想定を上回るご注文をいただき、予定数量に達したため販売を終了いたしました。</p>
+              <div class="story-body">
+                <p>今年はビターチョコのテリーヌ、ベリークリーム、エスプレッソアイスを一皿にまとめ、コーヒーや赤ワインと相性の良い構成に仕上げました。写真を目的にご来店くださる方も多く、店内が華やかな雰囲気になりました。</p>
+                <p>期間中はテイクアウトの焼き菓子もバレンタイン仕様でご用意し、多くの方にご利用いただきました。ご来店くださった皆さまに、心より感謝申し上げます。</p>
+                <p>次回は初夏に向けたデザートフェアを企画中です。今回タイミングが合わなかった方にも楽しんでいただけるよう、早めにご案内いたします。</p>
+              </div>
+              <div class="info-grid">
+                <div class="info-box">
+                  <h3>Thank You</h3>
+                  <p>限定プレートは 2月13日、金曜日の営業終了時点で完売しました。</p>
+                </div>
+                <div class="info-box">
+                  <h3>Next Event</h3>
+                  <p>初夏のデザート企画は 5月中旬ごろに詳細をお知らせ予定です。</p>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="cta-panel">
+        <div>
+          <h2>お知らせの先にある時間も、ぜひ店内で。</h2>
+          <p>気になるメニューやイベントがあれば、お席のご予約やお問い合わせもこちらから。少人数の集まりや貸切相談も受け付けています。</p>
+        </div>
+        <div class="cta-actions">
+          <a href="index.html#contact" class="btn btn-primary">Reserve</a>
+          <a href="index.html#menu" class="btn btn-outline-dark">View Menu</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="logo">
+        HANA
+        <span>Cafe &amp; Bar - Kakuozan</span>
+      </div>
+      <p class="footer-copy">© 2026 Cafe &amp; Bar HANA. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>
